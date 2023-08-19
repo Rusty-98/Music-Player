@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="nav">
+        <div class="logo">
+            <img src="logo.png" alt="">
+            <h3>Music Player</h3>
+        </div>
+        <div class="menu">
+            <h2 id="nowPlay">Now Playing ~ </h2>
+            <h2 id="nowPlaying">Metamorphosis</h3>
+        </div>
+    </div>
+    <div id="main">
+        <div id="player">
+            <div class="left">
+                <div class="songItem">
+                    <img src="https://i.scdn.co/image/ab67616d00001e02b852a616ae3a49a1f6b0f16e" alt="">
+                    <h3>Metamorphosis</h3>
+                    <i class="ri-play-circle-line miniCircle" id="1"></i>
+                </div>
+                <div class="songItem">
+                    <img src="https://i.scdn.co/image/ab67616d00001e028009bc75188384c8b65fef4f" alt="">
+                    <h3>Rapture</h3>
+                    <i class="ri-play-circle-line miniCircle" id="2"></i>
+                </div>
+                <div class="songItem">
+                    <img src="https://i.scdn.co/image/ab67616d00001e024718e2b124f79258be7bc452" alt="">
+                    <h3>Starboy</h3>
+                    <i class="ri-play-circle-line miniCircle" id="3"></i>
+                </div>
+                <div class="songItem">
+                    <img src="https://i.scdn.co/image/ab67616d00001e021a8c4618eda885a406958dd0" alt="">
+                    <h3>Cheques</h3>
+                    <i class="ri-play-circle-line miniCircle" id="4"></i>
+                </div>
+                <div class="songItem">
+                    <img src="https://img.freepik.com/premium-photo/cool-lofi-girl-studying-her-desk-rainy-cloudy-outside-beautiful-chill-atmospheric-wallpaper-4k-streaming-background-lofi-hiphop-style-anime-manga-style-generative-ai_117038-5586.jpg" alt="">
+                    <h3>Diggy(Jim Do)</h3>
+                    <i class="ri-play-circle-line miniCircle" id="5"></i>
+                </div>
+                <div class="songItem">
+                    <img src="https://c4.wallpaperflare.com/wallpaper/51/968/38/anime-tokyo-ghoul-re-ken-kaneki-hd-wallpaper-preview.jpg" alt="">
+                    <h3>Unravel</h3>
+                    <i class="ri-play-circle-line miniCircle" id="6"></i>
+                </div>
+                <div class="songItem">
+                    <img src="https://dns2.pendusaab.com/thumb/12302860.jpg" alt="">
+                    <h3>Patola</h3>
+                    <i class="ri-play-circle-line miniCircle" id="7"></i>
+                </div>
+                <div class="songItem">
+                    <img src="https://images2.alphacoders.com/123/1231640.jpg" alt="">
+                    <h3>Itachi</h3>
+                    <i class="ri-play-circle-line miniCircle" id="8"></i>
+                </div>
+            </div>
+            <div class="right">
+                <img src="music.avif" alt="">
+            </div>
+        </div>
+        <div id="bottom">
+            <input type="range" name="range" id="progressBar" value="0" min="0" max="100">
+            <div id="icon">
+                <i class="ri-rewind-line" id="pre"></i>
+                <i class="ri-play-fill" id="mainPlay"></i>
+                <i class="ri-speed-line" id="nxt"></i>
+            </div>
+        </div>
+    </div>    
+    <script src="script.js"></script>
+</body>
+</html>
