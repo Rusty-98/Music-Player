@@ -1,7 +1,6 @@
 export class AudioEngine {
   constructor() {
     this.audio = new Audio();
-    this.audio.crossOrigin = "anonymous";
     this.audio.preload = "metadata";
 
     this.audioCtx = null;
@@ -140,6 +139,11 @@ export class AudioEngine {
 
   loadTrack(track, autoplay = false) {
     this.currentTrack = track;
+    if (track.src.startsWith('http://') || track.src.startsWith('https://')) {
+      this.audio.crossOrigin = "anonymous";
+    } else {
+      this.audio.removeAttribute('crossorigin');
+    }
     this.audio.src = track.src;
     this.audio.playbackRate = this.playbackRate;
     this.audio.load();

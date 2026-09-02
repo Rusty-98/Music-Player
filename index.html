@@ -9,7 +9,7 @@
   <!-- Remix Icons -->
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
-<body class="mode-studio">
+<body class="mode-studio theme-neutral">
   <!-- Ambient Audio-Reactive Glow Mesh (Studio Mode) -->
   <div class="ambient-background" id="ambientBg">
     <div class="ambient-orb ambient-orb-1"></div>
@@ -45,10 +45,10 @@
         <!-- Stealth / Office Mode Toggle -->
         <button id="btnToggleMode" class="glass-btn" title="Toggle Office Stealth Mode (Press Esc or `)">
           <i class="ri-terminal-box-line" style="color: #22c55e;"></i>
-          <span>Office Mode <kbd style="font-size: 10px; background: rgba(255,255,255,0.15); padding: 1px 5px; border-radius: 4px;">Esc</kbd></span>
+          <span>Office CLI Mode <kbd style="font-size: 10px; background: rgba(255,255,255,0.15); padding: 1px 5px; border-radius: 4px;">Esc</kbd></span>
         </button>
 
-        <button id="btnOpenEq" class="glass-btn" title="Audio Equalizer">
+        <button id="btnOpenEq" class="glass-btn" title="Audio Equalizer & Spectrum">
           <i class="ri-equalizer-3-line"></i>
           <span>Equalizer</span>
         </button>
@@ -136,6 +136,7 @@
             <button class="vis-mode-btn" data-mode="circle">Pulse</button>
             <button class="vis-mode-btn" data-mode="wave">Wave</button>
             <button class="vis-mode-btn" data-mode="particles">Nebula</button>
+            <button class="vis-mode-btn" data-mode="grid">Synth</button>
           </div>
         </div>
 
@@ -225,157 +226,263 @@
     </footer>
   </div>
 
-  <!-- OFFICE / STEALTH CLI TERMINAL MODE -->
+  <!-- OFFICE / STEALTH CLI HACKER TERMINAL MODE -->
   <div id="terminalApp" class="terminal-container" style="display: none;">
-    <!-- Terminal Title Bar -->
+    <!-- Background Canvas for Matrix Rain Effect -->
+    <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+    <!-- CRT Scanline Glow Overlay -->
+    <div id="crtOverlay" class="crt-overlay crt-active"></div>
+
+    <!-- Terminal Window Title Bar -->
     <div class="term-titlebar">
       <div class="term-traffic-lights">
-        <span class="term-dot term-dot-red" id="btnTermExit"></span>
-        <span class="term-dot term-dot-yellow" id="btnTermMin"></span>
-        <span class="term-dot term-dot-green" id="btnTermMax"></span>
+        <span class="term-dot term-dot-red" id="btnTermExit" title="Close / Switch to Studio"></span>
+        <span class="term-dot term-dot-yellow" id="btnTermMin" title="Minimize"></span>
+        <span class="term-dot term-dot-green" id="btnTermMax" title="Fullscreen"></span>
       </div>
       <div class="term-title-text">
         <i class="ri-terminal-fill"></i>
-        <span>geniu@workstation: ~/projects/backend-daemon-service (bash)</span>
+        <span id="termHeaderPrompt">root@mainframe-node-04: ~/kernel/audio-dsp-daemon (bash)</span>
       </div>
+      
+      <!-- Top Action Toolbar -->
       <div class="term-top-actions">
-        <button id="btnTermSwitchStudio" class="term-action-btn" title="Back to Studio (Esc)">
+        <!-- Theme Switchers -->
+        <div class="term-theme-picker">
+          <button class="term-theme-chip active" data-termtheme="neutral" title="Dark Neutral">Neutral</button>
+          <button class="term-theme-chip" data-termtheme="matrix" title="Phosphor Matrix Green">Matrix</button>
+          <button class="term-theme-chip" data-termtheme="cyan" title="Cyber Cyan">Cyan</button>
+          <button class="term-theme-chip" data-termtheme="amber" title="Amber CRT">Amber</button>
+          <button class="term-theme-chip" data-termtheme="red" title="Red Alert">Red</button>
+        </div>
+
+        <button id="btnToggleMatrix" class="term-action-btn" title="Toggle Matrix Digital Rain Background">
+          <i class="ri-rainy-line"></i>
+          <span>Rain: <b id="lblMatrixState">OFF</b></span>
+        </button>
+
+        <button id="btnToggleCrt" class="term-action-btn" title="Toggle CRT Scanlines & Screen Curvature">
+          <i class="ri-tv-line"></i>
+          <span>CRT: <b id="lblCrtState">ON</b></span>
+        </button>
+
+        <button id="btnTermSwitchStudio" class="term-action-btn term-action-studio" title="Back to Studio Mode (Esc)">
           <i class="ri-sparkling-fill"></i>
-          <span>Studio Mode [Esc]</span>
+          <span>Studio [Esc]</span>
         </button>
       </div>
     </div>
 
-    <!-- Terminal Inner Screen -->
+    <!-- Terminal Inner Screen Body -->
     <div class="term-screen">
-      <!-- ASCII Header Banner -->
+      <!-- High-Tech ASCII System Telemetry Banner -->
       <div class="term-banner">
-┌────────────────────────────────────────────────────────────────────────┐
-│  <span class="term-accent">AUDIO-DAEMON ENGINE v2.4.0</span> (x86_64-pc-windows)                          │
-│  PID: <span class="term-highlight">4928</span> | UPTIME: <span id="termUptime">00:14:22</span> | CPU: <span id="termCpu">3.8%</span> | MEM: <span id="termMem">148MB</span> | STATUS: <span class="term-success" id="termDaemonStatus">RUNNING</span>  │
-└────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  <span class="term-accent">AUDIO-KERNEL DAEMON v4.2.0-rt</span> (x86_64-smp-linux)  [SECURITY RING: <span class="term-highlight">0</span>]                                  │
+│  PID: <span class="term-highlight">4928</span> | UPTIME: <span id="termUptime">00:14:22</span> | CPU: <span id="termCpu">4.2%</span> | MEM: <span id="termMem">164MB</span> | DSP BUF: <span class="term-highlight">512b</span> | RATE: <span class="term-accent">48.0kHz</span> | LAT: <span class="term-success">1.2ms</span> | <span class="term-success" id="termDaemonStatus">[RUNNING]</span> │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────┘
       </div>
 
-      <!-- Disguised Playback Control Box -->
-      <div class="term-box">
-        <div class="term-box-header">
-          <span class="term-box-title">▶ ACTIVE PROCESS / STREAM MONITOR</span>
-          <span class="term-tag" id="termTrackStatus">[ACTIVE]</span>
-        </div>
-        
-        <div class="term-process-row">
-          <span class="term-label">CURRENT TASK:</span>
-          <span class="term-value-bold" id="termCurrentTrackName">01_Metamorphosis_INTERWORLD.bin</span>
-        </div>
+      <!-- Main Terminal Dashboard (2-Column Grid) -->
+      <div class="term-dashboard-grid">
+        <!-- LEFT COLUMN: Active Monitor, Telemetry, and Process Table -->
+        <div class="term-col term-col-left">
+          <!-- Active Stream & ASCII Spectrum Monitor -->
+          <div class="term-box">
+            <div class="term-box-header">
+              <span class="term-box-title">▶ ACTIVE PROCESS & REAL-TIME SPECTRUM</span>
+              <span class="term-tag" id="termTrackStatus">[ACTIVE]</span>
+            </div>
+            
+            <div class="term-process-row">
+              <span class="term-label">STREAM:</span>
+              <span class="term-value-bold" id="termCurrentTrackName">01_Metamorphosis_INTERWORLD.bin</span>
+            </div>
 
-        <div class="term-process-row">
-          <span class="term-label">PROGRESS:</span>
-          <div class="term-ascii-progress-wrap" id="termProgressClickArea" title="Click to seek">
-            <span class="term-ascii-bar" id="termAsciiBar">[=========================>-------------]</span>
-            <span class="term-ascii-percent" id="termAsciiPercent">65%</span>
-            <span class="term-ascii-time" id="termAsciiTime">(01:45 / 02:40)</span>
+            <div class="term-process-row">
+              <span class="term-label">PROGRESS:</span>
+              <div class="term-ascii-progress-wrap" id="termProgressClickArea" title="Click to seek position">
+                <span class="term-ascii-bar" id="termAsciiBar">[=========================>-------------]</span>
+                <span class="term-ascii-percent" id="termAsciiPercent">65%</span>
+                <span class="term-ascii-time" id="termAsciiTime">(01:45 / 02:40)</span>
+              </div>
+            </div>
+
+            <!-- Live 32-band Dynamic ASCII Spectrum -->
+            <div class="term-process-row">
+              <span class="term-label">SPECTRUM:</span>
+              <span class="term-ascii-spectrum" id="termAsciiSpectrum">[ ▂▄▆█▇▅▃ ▂▅█▇▄▂  ▂▄▆█▅▃ ▂▅█ ]</span>
+            </div>
+
+            <!-- Live Hex Audio Stream Memory Dump -->
+            <div class="term-process-row">
+              <span class="term-label">HEX DUMP:</span>
+              <span class="term-hex-dump" id="termHexDump">0x7F 0x45 0x4C 0x46 0x02 0x01 0x01 0x00 0x8A 0x3F 0x1C 0xEE</span>
+            </div>
+
+            <!-- Disguised Inline Control Buttons -->
+            <div class="term-btn-row">
+              <button id="btnTermPlay" class="term-btn term-btn-primary" title="Space">
+                <span id="termPlayText">[ ⏸ PAUSE ]</span>
+              </button>
+              <button id="btnTermPrev" class="term-btn" title="Left Arrow">[ ◄ PREV ]</button>
+              <button id="btnTermNext" class="term-btn" title="Right Arrow">[ ► NEXT ]</button>
+              <button id="btnTermShuffle" class="term-btn" title="S">[ 🔀 SHUFFLE: OFF ]</button>
+              <button id="btnTermRepeat" class="term-btn" title="R">[ 🔁 REPEAT: ALL ]</button>
+              <button id="btnTermVolDown" class="term-btn" title="Down Arrow">[ 🎚 VOL - ]</button>
+              <button id="btnTermVolUp" class="term-btn" title="Up Arrow">[ 🎚 VOL + ]</button>
+              <button id="btnTermMute" class="term-btn" title="M">[ 🔊 UNMUTED ]</button>
+            </div>
+          </div>
+
+          <!-- Process Queue / HTOP Table -->
+          <div class="term-box term-table-box">
+            <div class="term-box-header">
+              <span class="term-box-title">📋 HTOP PROCESS QUEUE (Click row or run command)</span>
+              <span class="term-label" id="termQueueCount">24 threads</span>
+            </div>
+
+            <div class="term-table-wrapper">
+              <table class="term-table">
+                <thead>
+                  <tr>
+                    <th style="width: 48px;">PID</th>
+                    <th>THREAD / TRACK NAME</th>
+                    <th style="width: 100px;">SUBSYSTEM</th>
+                    <th style="width: 90px;">STATE</th>
+                    <th style="width: 70px;">CMD</th>
+                  </tr>
+                </thead>
+                <tbody id="termProcessTableBody">
+                  <!-- Dynamically generated rows -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-        <div class="term-process-row">
-          <span class="term-label">SPECTRUM:</span>
-          <span class="term-ascii-spectrum" id="termAsciiSpectrum">[ ▂▄▆█▇▅▃ ▂▅█▇▄▂  ▂▄▆█▅▃ ]</span>
-        </div>
+        <!-- RIGHT COLUMN: Running Kernel Logs Stream & Interactive Shell -->
+        <div class="term-col term-col-right">
+          <!-- Live Real-Time Kernel & CMD Logs Stream -->
+          <div class="term-box term-logs-box">
+            <div class="term-box-header">
+              <div class="term-box-title-group">
+                <span class="term-box-title">⚡ RUNNING CMD & KERNEL LOGS</span>
+                <span class="term-live-indicator"><span class="term-live-dot"></span> STREAMING</span>
+              </div>
+              <div class="term-logs-controls">
+                <button id="btnToggleLogStream" class="term-mini-btn" title="Pause / Resume Live Logs">⏸ Pause</button>
+                <button id="btnClearLogs" class="term-mini-btn" title="Clear log stream">🗑 Clear</button>
+                <button id="btnLogSpeed" class="term-mini-btn" title="Change stream speed">⚡ Normal</button>
+              </div>
+            </div>
+            
+            <div class="term-live-log-stream" id="termLiveLogStream">
+              <!-- Live simulated kernel events stream here -->
+            </div>
+          </div>
 
-        <!-- Disguised Inline ASCII Playback Buttons -->
-        <div class="term-btn-row">
-          <button id="btnTermPlay" class="term-btn term-btn-primary" title="Space">
-            <span id="termPlayText">[ ⏸ PAUSE PROCESS ]</span>
-          </button>
-          <button id="btnTermPrev" class="term-btn" title="Left Arrow">[ ◄ PREV ]</button>
-          <button id="btnTermNext" class="term-btn" title="Right Arrow">[ ► NEXT ]</button>
-          <button id="btnTermShuffle" class="term-btn" title="S">[ 🔀 SHUFFLE: OFF ]</button>
-          <button id="btnTermRepeat" class="term-btn" title="R">[ 🔁 REPEAT: ALL ]</button>
-          <button id="btnTermVolDown" class="term-btn" title="Down Arrow">[ 🎚 VOL - ]</button>
-          <button id="btnTermVolUp" class="term-btn" title="Up Arrow">[ 🎚 VOL + ]</button>
-          <button id="btnTermMute" class="term-btn" title="M">[ 🔊 UNMUTED ]</button>
+          <!-- Interactive Bash CLI Shell Console -->
+          <div class="term-box term-console-box">
+            <div class="term-box-header">
+              <span class="term-box-title">💻 INTERACTIVE BASH SHELL</span>
+              <span class="term-label">Type <b>help</b> for manual</span>
+            </div>
+            <div class="term-output" id="termOutput">
+              <div class="term-line"><span class="term-prompt-prefix">[SYSTEM]</span> AuraTune Kernel Daemon v4.2.0 initialized.</div>
+              <div class="term-line"><span class="term-prompt-prefix">[SYSTEM]</span> Monitored audio stream connected to WebAudio pipeline.</div>
+              <div class="term-line"><span class="term-prompt-prefix">[HINT]</span> Type <span class="term-highlight">help</span>, <span class="term-highlight">play</span>, <span class="term-highlight">pause</span>, <span class="term-highlight">scan</span>, <span class="term-highlight">top</span>, <span class="term-highlight">matrix</span>, <span class="term-highlight">theme matrix</span>, or <span class="term-highlight">studio</span>.</div>
+            </div>
+            <form id="termCommandForm" class="term-input-line">
+              <span class="term-prompt-str" id="termPromptStr">root@mainframe:~$</span>
+              <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false" placeholder="type a command (e.g. play, pause, next, scan, top, matrix, vol 80)...">
+            </form>
+          </div>
         </div>
-      </div>
-
-      <!-- Process Table (Click to Play Track) -->
-      <div class="term-box">
-        <div class="term-box-header">
-          <span class="term-box-title">📋 DAEMON PROCESS QUEUE (Click row or run command to execute)</span>
-          <span class="term-label" id="termQueueCount">17 threads</span>
-        </div>
-
-        <div class="term-table-wrapper">
-          <table class="term-table">
-            <thead>
-              <tr>
-                <th style="width: 50px;">PID</th>
-                <th>PROCESS / TRACK</th>
-                <th style="width: 120px;">CATEGORY</th>
-                <th style="width: 100px;">STATUS</th>
-                <th style="width: 80px;">ACTION</th>
-              </tr>
-            </thead>
-            <tbody id="termProcessTableBody">
-              <!-- Dynamically generated rows -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Interactive Shell Terminal Console -->
-      <div class="term-box term-console-box">
-        <div class="term-box-header">
-          <span class="term-box-title">💻 INTERACTIVE CLI SHELL</span>
-          <span class="term-label">Type <b>help</b> for command manual</span>
-        </div>
-        <div class="term-output" id="termOutput">
-          <div class="term-line"><span class="term-prompt-prefix">system:</span> AuraTune CLI Daemon v2.4 initialized in stealth mode.</div>
-          <div class="term-line"><span class="term-prompt-prefix">system:</span> Type <span class="term-highlight">help</span>, <span class="term-highlight">play</span>, <span class="term-highlight">pause</span>, <span class="term-highlight">next</span>, <span class="term-highlight">vol 80</span>, <span class="term-highlight">ls</span>, <span class="term-highlight">lyrics</span>, <span class="term-highlight">clear</span>, or <span class="term-highlight">studio</span>.</div>
-        </div>
-        <form id="termCommandForm" class="term-input-line">
-          <span class="term-prompt-str">user@workstation:~$</span>
-          <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false" placeholder="type a command (e.g. play, pause, next, ls, vol 90)...">
-        </form>
       </div>
     </div>
   </div>
 
-  <!-- Equalizer Modal -->
+  <!-- EQUALIZER & ANIMATED SPECTRUM MODAL -->
   <div class="modal-backdrop" id="eqModal">
-    <div class="modal-card">
+    <div class="modal-card eq-modal-card">
       <div class="modal-header">
         <div class="modal-title">
           <i class="ri-equalizer-3-line" style="color: var(--accent-color);"></i>
-          <span>Studio Equalizer</span>
+          <span>Studio Equalizer & Dynamic Spectrum</span>
         </div>
         <button class="btn-close-modal" id="btnCloseEq">
           <i class="ri-close-line"></i>
         </button>
       </div>
 
-      <div class="eq-presets" id="eqPresets">
-        <button class="eq-preset-chip active" data-preset="flat">Flat</button>
-        <button class="eq-preset-chip" data-preset="bass">Bass Boost</button>
-        <button class="eq-preset-chip" data-preset="vocal">Vocal Boost</button>
-        <button class="eq-preset-chip" data-preset="edm">Electronic</button>
-        <button class="eq-preset-chip" data-preset="rock">Rock</button>
-        <button class="eq-preset-chip" data-preset="chill">Acoustic</button>
+      <!-- Live Animated Spectrum Canvas inside Equalizer Modal -->
+      <div class="eq-visualizer-container">
+        <div class="eq-vis-header">
+          <span>REAL-TIME 32-BAND FREQUENCY SPECTRUM & FILTER RESPONSE</span>
+          <span class="eq-vis-badge">LIVE 60FPS</span>
+        </div>
+        <div class="eq-canvas-wrapper">
+          <canvas id="eqVisualizerCanvas"></canvas>
+          <div class="eq-freq-scale">
+            <span>60Hz</span>
+            <span>150Hz</span>
+            <span>400Hz</span>
+            <span>1kHz</span>
+            <span>2.5kHz</span>
+            <span>6kHz</span>
+            <span>16kHz</span>
+          </div>
+        </div>
       </div>
 
+      <!-- Quick Preset Chips -->
+      <div class="eq-presets" id="eqPresets">
+        <button class="eq-preset-chip active" data-preset="flat">Flat</button>
+        <button class="eq-preset-chip" data-preset="bass">Bass Boost 🔥</button>
+        <button class="eq-preset-chip" data-preset="vocal">Vocal Boost 🎙️</button>
+        <button class="eq-preset-chip" data-preset="edm">EDM / Club ⚡</button>
+        <button class="eq-preset-chip" data-preset="rock">Rock / Metal 🎸</button>
+        <button class="eq-preset-chip" data-preset="cyberpunk">Cyberpunk 🌌</button>
+        <button class="eq-preset-chip" data-preset="chill">Lo-Fi Chill ☕</button>
+        <button class="eq-preset-chip" data-preset="acoustic">3D Acoustic 🎧</button>
+      </div>
+
+      <!-- 3-Band Sliders with Level Meters -->
       <div class="eq-sliders-grid">
         <div class="eq-band-col">
-          <input type="range" id="bassSlider" class="eq-slider-vertical" min="-12" max="12" step="0.5" value="0" orient="vertical">
-          <span class="eq-band-label">Bass</span>
+          <div class="eq-band-meter-wrap">
+            <input type="range" id="bassSlider" class="eq-slider-vertical" min="-12" max="12" step="0.5" value="0" orient="vertical">
+            <div class="eq-vu-meter" id="bassVuMeter">
+              <div class="eq-vu-bar"></div>
+            </div>
+          </div>
+          <span class="eq-band-label">Bass (200Hz)</span>
+          <span class="eq-band-desc">Sub & Low End</span>
           <span class="eq-band-val" id="bassVal">0dB</span>
         </div>
+
         <div class="eq-band-col">
-          <input type="range" id="midSlider" class="eq-slider-vertical" min="-12" max="12" step="0.5" value="0" orient="vertical">
-          <span class="eq-band-label">Mids</span>
+          <div class="eq-band-meter-wrap">
+            <input type="range" id="midSlider" class="eq-slider-vertical" min="-12" max="12" step="0.5" value="0" orient="vertical">
+            <div class="eq-vu-meter" id="midVuMeter">
+              <div class="eq-vu-bar"></div>
+            </div>
+          </div>
+          <span class="eq-band-label">Mids (1.5kHz)</span>
+          <span class="eq-band-desc">Vocals & Presence</span>
           <span class="eq-band-val" id="midVal">0dB</span>
         </div>
+
         <div class="eq-band-col">
-          <input type="range" id="trebleSlider" class="eq-slider-vertical" min="-12" max="12" step="0.5" value="0" orient="vertical">
-          <span class="eq-band-label">Treble</span>
+          <div class="eq-band-meter-wrap">
+            <input type="range" id="trebleSlider" class="eq-slider-vertical" min="-12" max="12" step="0.5" value="0" orient="vertical">
+            <div class="eq-vu-meter" id="trebleVuMeter">
+              <div class="eq-vu-bar"></div>
+            </div>
+          </div>
+          <span class="eq-band-label">Treble (4.5kHz)</span>
+          <span class="eq-band-desc">Highs & Air</span>
           <span class="eq-band-val" id="trebleVal">0dB</span>
         </div>
       </div>
@@ -421,19 +528,15 @@
           <kbd class="shortcut-key">M</kbd>
         </div>
         <div class="shortcut-row">
-          <span>Like / Favorite Track</span>
-          <kbd class="shortcut-key">L</kbd>
-        </div>
-        <div class="shortcut-row">
-          <span>Toggle Shuffle</span>
+          <span>Shuffle Toggle</span>
           <kbd class="shortcut-key">S</kbd>
         </div>
         <div class="shortcut-row">
-          <span>Cycle Repeat (All / One / Off)</span>
+          <span>Repeat Mode</span>
           <kbd class="shortcut-key">R</kbd>
         </div>
         <div class="shortcut-row">
-          <span>Toggle Equalizer</span>
+          <span>Open Equalizer</span>
           <kbd class="shortcut-key">E</kbd>
         </div>
         <div class="shortcut-row">
