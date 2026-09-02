@@ -1,80 +1,453 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Player</title>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraTune — Modern Web Music Player</title>
+  <meta name="description" content="Next-generation web audio music player with real-time visualizer, 3-band equalizer, dynamic ambient glow, and high-fidelity audio playback.">
+  <link rel="icon" type="image/png" href="logo.png">
+  <!-- Remix Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
-<body>
-    <div id="nav">
-        <div class="logo">
-            <img src="logo.png" alt="">
-            <h3>Music Player</h3>
+<body class="mode-studio">
+  <!-- Ambient Audio-Reactive Glow Mesh (Studio Mode) -->
+  <div class="ambient-background" id="ambientBg">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-grid-overlay"></div>
+  </div>
+
+  <!-- STUDIO MODE WRAPPER -->
+  <div id="studioApp">
+    <!-- Glass Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="ri-disc-line"></i>
         </div>
-        <div class="menu">
-            <h2 id="nowPlay">Now Playing ~ </h2>
-            <h2 id="nowPlaying">Metamorphosis</h3>
+        <div class="brand-text">
+          <h1>AuraTune</h1>
+          <span>Studio Player</span>
         </div>
+      </div>
+
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <i class="ri-search-2-line"></i>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search songs, artists, albums..." autocomplete="off">
+          <button id="searchClearBtn" class="search-clear-btn" title="Clear search">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Stealth / Office Mode Toggle -->
+        <button id="btnToggleMode" class="glass-btn" title="Toggle Office Stealth Mode (Press Esc or `)">
+          <i class="ri-terminal-box-line" style="color: #22c55e;"></i>
+          <span>Office Mode <kbd style="font-size: 10px; background: rgba(255,255,255,0.15); padding: 1px 5px; border-radius: 4px;">Esc</kbd></span>
+        </button>
+
+        <button id="btnOpenEq" class="glass-btn" title="Audio Equalizer">
+          <i class="ri-equalizer-3-line"></i>
+          <span>Equalizer</span>
+        </button>
+        <button id="btnOpenShortcuts" class="glass-btn glass-btn-icon" title="Keyboard Shortcuts">
+          <i class="ri-keyboard-line"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport Grid -->
+    <main class="app-main">
+      <!-- Left Sidebar: Playlist & Library -->
+      <section class="glass-panel panel-sidebar" id="panelSidebar">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="ri-folder-music-line"></i>
+            <span>Library</span>
+          </div>
+          <span class="track-count-badge" id="trackCountBadge">0 tracks</span>
+        </div>
+
+        <div class="filter-tabs" id="filterTabs">
+          <button class="filter-chip active" data-filter="all">All</button>
+          <button class="filter-chip" data-filter="favorites">Favorites</button>
+          <button class="filter-chip" data-filter="phonk">Phonk</button>
+          <button class="filter-chip" data-filter="punjabi">Punjabi</button>
+          <button class="filter-chip" data-filter="pop">Pop / R&B</button>
+          <button class="filter-chip" data-filter="anime">Anime</button>
+          <button class="filter-chip" data-filter="chill">Lo-Fi</button>
+          <button class="filter-chip" data-filter="indie">Indie</button>
+        </div>
+
+        <div class="track-list" id="trackList">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Center Stage: Now Playing Showcase & Lyrics -->
+      <section class="glass-panel panel-center">
+        <div class="center-stage-header">
+          <div class="now-playing-badge">
+            <span class="pulse-dot"></span>
+            <span>Now Playing</span>
+          </div>
+        </div>
+
+        <!-- 3D Vinyl Showcase -->
+        <div class="artwork-showcase" id="centerShowcase">
+          <div class="vinyl-disc">
+            <div class="vinyl-grooves"></div>
+            <div class="vinyl-center">
+              <div class="vinyl-hole"></div>
+            </div>
+          </div>
+          <div class="album-art-card">
+            <img id="centerCover" src="" alt="Album Cover">
+          </div>
+        </div>
+
+        <!-- Center Metadata -->
+        <div class="center-track-info">
+          <h2 class="center-title" id="centerTitle">—</h2>
+          <p class="center-artist" id="centerArtist">—</p>
+          <div class="center-tags">
+            <span class="genre-tag" id="centerGenre">Pop</span>
+            <span class="genre-tag" id="centerYear">2024</span>
+          </div>
+        </div>
+
+        <!-- Synced Lyrics Display -->
+        <div class="lyrics-box" id="lyricsBox">
+          <div class="lyrics-line active">♪ Loading track audio ♪</div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Audio Visualizer & File Dropzone -->
+      <section class="glass-panel panel-visualizer">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="ri-sound-module-line"></i>
+            <span>Visualizer</span>
+          </div>
+          <div class="vis-mode-selector" id="visModeSelector">
+            <button class="vis-mode-btn active" data-mode="bars">Bars</button>
+            <button class="vis-mode-btn" data-mode="circle">Pulse</button>
+            <button class="vis-mode-btn" data-mode="wave">Wave</button>
+            <button class="vis-mode-btn" data-mode="particles">Nebula</button>
+          </div>
+        </div>
+
+        <div class="visualizer-canvas-wrap">
+          <canvas id="visualizerCanvas"></canvas>
+          <button id="btnToggleFullscreenVis" class="vis-overlay-btn" title="Fullscreen View">
+            <i class="ri-fullscreen-line"></i>
+          </button>
+        </div>
+
+        <div class="dropzone-container">
+          <div class="dropzone" id="fileDropzone">
+            <i class="ri-upload-cloud-2-line"></i>
+            <span>Drop your own MP3 files here</span>
+            <small>or click to browse local files</small>
+            <input type="file" id="fileInput" accept="audio/*" multiple style="display: none;">
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Playbar -->
+    <footer class="app-playbar">
+      <!-- Left: Mini Track Details -->
+      <div class="playbar-left">
+        <div class="playbar-cover">
+          <img id="playbarCover" src="" alt="Track preview">
+        </div>
+        <div class="playbar-info">
+          <div class="playbar-title" id="playbarTitle">—</div>
+          <div class="playbar-artist" id="playbarArtist">—</div>
+        </div>
+        <button id="btnPlaybarLike" class="btn-playbar-like" title="Add to Favorites">
+          <i class="ri-heart-line"></i>
+        </button>
+      </div>
+
+      <!-- Center: Playback Controls & Progress -->
+      <div class="playbar-center">
+        <div class="controls-row">
+          <button id="btnShuffle" class="ctrl-btn" title="Shuffle (S)">
+            <i class="ri-shuffle-line"></i>
+          </button>
+          <button id="btnPrev" class="ctrl-btn" title="Previous (Left Arrow)">
+            <i class="ri-skip-back-fill"></i>
+          </button>
+          <button id="btnPlay" class="ctrl-btn ctrl-btn-play" title="Play/Pause (Space)">
+            <i class="ri-play-fill"></i>
+          </button>
+          <button id="btnNext" class="ctrl-btn" title="Next (Right Arrow)">
+            <i class="ri-skip-forward-fill"></i>
+          </button>
+          <button id="btnRepeat" class="ctrl-btn active" title="Repeat (R)">
+            <i class="ri-repeat-2-line"></i>
+          </button>
+        </div>
+
+        <div class="progress-row">
+          <span class="time-stamp current" id="timeCurrent">0:00</span>
+          <div class="scrubber-container" id="scrubberContainer">
+            <div class="scrubber-track">
+              <div class="scrubber-fill" id="scrubberFill"></div>
+            </div>
+            <div class="scrubber-thumb" id="scrubberThumb"></div>
+          </div>
+          <span class="time-stamp" id="timeTotal">0:00</span>
+        </div>
+      </div>
+
+      <!-- Right: Utility Controls & Volume -->
+      <div class="playbar-right">
+        <select id="speedSelect" class="glass-btn" style="padding: 0 10px; height: 32px; font-size: 12px;" title="Playback Speed">
+          <option value="0.75">0.75x</option>
+          <option value="1.0" selected>1.0x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2.0">2.0x</option>
+        </select>
+
+        <div class="volume-wrapper">
+          <button id="btnVolume" class="btn-volume" title="Mute/Unmute (M)">
+            <i class="ri-volume-up-fill"></i>
+          </button>
+          <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.8">
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- OFFICE / STEALTH CLI TERMINAL MODE -->
+  <div id="terminalApp" class="terminal-container" style="display: none;">
+    <!-- Terminal Title Bar -->
+    <div class="term-titlebar">
+      <div class="term-traffic-lights">
+        <span class="term-dot term-dot-red" id="btnTermExit"></span>
+        <span class="term-dot term-dot-yellow" id="btnTermMin"></span>
+        <span class="term-dot term-dot-green" id="btnTermMax"></span>
+      </div>
+      <div class="term-title-text">
+        <i class="ri-terminal-fill"></i>
+        <span>geniu@workstation: ~/projects/backend-daemon-service (bash)</span>
+      </div>
+      <div class="term-top-actions">
+        <button id="btnTermSwitchStudio" class="term-action-btn" title="Back to Studio (Esc)">
+          <i class="ri-sparkling-fill"></i>
+          <span>Studio Mode [Esc]</span>
+        </button>
+      </div>
     </div>
-    <div id="main">
-        <div id="player">
-            <div class="left">
-                <div class="songItem">
-                    <img src="https://i.scdn.co/image/ab67616d00001e02b852a616ae3a49a1f6b0f16e" alt="">
-                    <h3>Metamorphosis</h3>
-                    <i class="ri-play-circle-line miniCircle" id="1"></i>
-                </div>
-                <div class="songItem">
-                    <img src="https://i.scdn.co/image/ab67616d00001e028009bc75188384c8b65fef4f" alt="">
-                    <h3>Rapture</h3>
-                    <i class="ri-play-circle-line miniCircle" id="2"></i>
-                </div>
-                <div class="songItem">
-                    <img src="https://i.scdn.co/image/ab67616d00001e024718e2b124f79258be7bc452" alt="">
-                    <h3>Starboy</h3>
-                    <i class="ri-play-circle-line miniCircle" id="3"></i>
-                </div>
-                <div class="songItem">
-                    <img src="https://i.scdn.co/image/ab67616d00001e021a8c4618eda885a406958dd0" alt="">
-                    <h3>Cheques</h3>
-                    <i class="ri-play-circle-line miniCircle" id="4"></i>
-                </div>
-                <div class="songItem">
-                    <img src="https://img.freepik.com/premium-photo/cool-lofi-girl-studying-her-desk-rainy-cloudy-outside-beautiful-chill-atmospheric-wallpaper-4k-streaming-background-lofi-hiphop-style-anime-manga-style-generative-ai_117038-5586.jpg" alt="">
-                    <h3>Diggy(Jim Do)</h3>
-                    <i class="ri-play-circle-line miniCircle" id="5"></i>
-                </div>
-                <div class="songItem">
-                    <img src="https://c4.wallpaperflare.com/wallpaper/51/968/38/anime-tokyo-ghoul-re-ken-kaneki-hd-wallpaper-preview.jpg" alt="">
-                    <h3>Unravel</h3>
-                    <i class="ri-play-circle-line miniCircle" id="6"></i>
-                </div>
-                <div class="songItem">
-                    <img src="https://dns2.pendusaab.com/thumb/12302860.jpg" alt="">
-                    <h3>Patola</h3>
-                    <i class="ri-play-circle-line miniCircle" id="7"></i>
-                </div>
-                <div class="songItem">
-                    <img src="https://images2.alphacoders.com/123/1231640.jpg" alt="">
-                    <h3>Itachi</h3>
-                    <i class="ri-play-circle-line miniCircle" id="8"></i>
-                </div>
-            </div>
-            <div class="right">
-                <img src="music.avif" alt="">
-            </div>
+
+    <!-- Terminal Inner Screen -->
+    <div class="term-screen">
+      <!-- ASCII Header Banner -->
+      <div class="term-banner">
+┌────────────────────────────────────────────────────────────────────────┐
+│  <span class="term-accent">AUDIO-DAEMON ENGINE v2.4.0</span> (x86_64-pc-windows)                          │
+│  PID: <span class="term-highlight">4928</span> | UPTIME: <span id="termUptime">00:14:22</span> | CPU: <span id="termCpu">3.8%</span> | MEM: <span id="termMem">148MB</span> | STATUS: <span class="term-success" id="termDaemonStatus">RUNNING</span>  │
+└────────────────────────────────────────────────────────────────────────┘
+      </div>
+
+      <!-- Disguised Playback Control Box -->
+      <div class="term-box">
+        <div class="term-box-header">
+          <span class="term-box-title">▶ ACTIVE PROCESS / STREAM MONITOR</span>
+          <span class="term-tag" id="termTrackStatus">[ACTIVE]</span>
         </div>
-        <div id="bottom">
-            <input type="range" name="range" id="progressBar" value="0" min="0" max="100">
-            <div id="icon">
-                <i class="ri-rewind-line" id="pre"></i>
-                <i class="ri-play-fill" id="mainPlay"></i>
-                <i class="ri-speed-line" id="nxt"></i>
-            </div>
+        
+        <div class="term-process-row">
+          <span class="term-label">CURRENT TASK:</span>
+          <span class="term-value-bold" id="termCurrentTrackName">01_Metamorphosis_INTERWORLD.bin</span>
         </div>
-    </div>    
-    <script src="script.js"></script>
+
+        <div class="term-process-row">
+          <span class="term-label">PROGRESS:</span>
+          <div class="term-ascii-progress-wrap" id="termProgressClickArea" title="Click to seek">
+            <span class="term-ascii-bar" id="termAsciiBar">[=========================>-------------]</span>
+            <span class="term-ascii-percent" id="termAsciiPercent">65%</span>
+            <span class="term-ascii-time" id="termAsciiTime">(01:45 / 02:40)</span>
+          </div>
+        </div>
+
+        <div class="term-process-row">
+          <span class="term-label">SPECTRUM:</span>
+          <span class="term-ascii-spectrum" id="termAsciiSpectrum">[ ▂▄▆█▇▅▃ ▂▅█▇▄▂  ▂▄▆█▅▃ ]</span>
+        </div>
+
+        <!-- Disguised Inline ASCII Playback Buttons -->
+        <div class="term-btn-row">
+          <button id="btnTermPlay" class="term-btn term-btn-primary" title="Space">
+            <span id="termPlayText">[ ⏸ PAUSE PROCESS ]</span>
+          </button>
+          <button id="btnTermPrev" class="term-btn" title="Left Arrow">[ ◄ PREV ]</button>
+          <button id="btnTermNext" class="term-btn" title="Right Arrow">[ ► NEXT ]</button>
+          <button id="btnTermShuffle" class="term-btn" title="S">[ 🔀 SHUFFLE: OFF ]</button>
+          <button id="btnTermRepeat" class="term-btn" title="R">[ 🔁 REPEAT: ALL ]</button>
+          <button id="btnTermVolDown" class="term-btn" title="Down Arrow">[ 🎚 VOL - ]</button>
+          <button id="btnTermVolUp" class="term-btn" title="Up Arrow">[ 🎚 VOL + ]</button>
+          <button id="btnTermMute" class="term-btn" title="M">[ 🔊 UNMUTED ]</button>
+        </div>
+      </div>
+
+      <!-- Process Table (Click to Play Track) -->
+      <div class="term-box">
+        <div class="term-box-header">
+          <span class="term-box-title">📋 DAEMON PROCESS QUEUE (Click row or run command to execute)</span>
+          <span class="term-label" id="termQueueCount">17 threads</span>
+        </div>
+
+        <div class="term-table-wrapper">
+          <table class="term-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">PID</th>
+                <th>PROCESS / TRACK</th>
+                <th style="width: 120px;">CATEGORY</th>
+                <th style="width: 100px;">STATUS</th>
+                <th style="width: 80px;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="termProcessTableBody">
+              <!-- Dynamically generated rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Interactive Shell Terminal Console -->
+      <div class="term-box term-console-box">
+        <div class="term-box-header">
+          <span class="term-box-title">💻 INTERACTIVE CLI SHELL</span>
+          <span class="term-label">Type <b>help</b> for command manual</span>
+        </div>
+        <div class="term-output" id="termOutput">
+          <div class="term-line"><span class="term-prompt-prefix">system:</span> AuraTune CLI Daemon v2.4 initialized in stealth mode.</div>
+          <div class="term-line"><span class="term-prompt-prefix">system:</span> Type <span class="term-highlight">help</span>, <span class="term-highlight">play</span>, <span class="term-highlight">pause</span>, <span class="term-highlight">next</span>, <span class="term-highlight">vol 80</span>, <span class="term-highlight">ls</span>, <span class="term-highlight">lyrics</span>, <span class="term-highlight">clear</span>, or <span class="term-highlight">studio</span>.</div>
+        </div>
+        <form id="termCommandForm" class="term-input-line">
+          <span class="term-prompt-str">user@workstation:~$</span>
+          <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false" placeholder="type a command (e.g. play, pause, next, ls, vol 90)...">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Equalizer Modal -->
+  <div class="modal-backdrop" id="eqModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="ri-equalizer-3-line" style="color: var(--accent-color);"></i>
+          <span>Studio Equalizer</span>
+        </div>
+        <button class="btn-close-modal" id="btnCloseEq">
+          <i class="ri-close-line"></i>
+        </button>
+      </div>
+
+      <div class="eq-presets" id="eqPresets">
+        <button class="eq-preset-chip active" data-preset="flat">Flat</button>
+        <button class="eq-preset-chip" data-preset="bass">Bass Boost</button>
+        <button class="eq-preset-chip" data-preset="vocal">Vocal Boost</button>
+        <button class="eq-preset-chip" data-preset="edm">Electronic</button>
+        <button class="eq-preset-chip" data-preset="rock">Rock</button>
+        <button class="eq-preset-chip" data-preset="chill">Acoustic</button>
+      </div>
+
+      <div class="eq-sliders-grid">
+        <div class="eq-band-col">
+          <input type="range" id="bassSlider" class="eq-slider-vertical" min="-12" max="12" step="0.5" value="0" orient="vertical">
+          <span class="eq-band-label">Bass</span>
+          <span class="eq-band-val" id="bassVal">0dB</span>
+        </div>
+        <div class="eq-band-col">
+          <input type="range" id="midSlider" class="eq-slider-vertical" min="-12" max="12" step="0.5" value="0" orient="vertical">
+          <span class="eq-band-label">Mids</span>
+          <span class="eq-band-val" id="midVal">0dB</span>
+        </div>
+        <div class="eq-band-col">
+          <input type="range" id="trebleSlider" class="eq-slider-vertical" min="-12" max="12" step="0.5" value="0" orient="vertical">
+          <span class="eq-band-label">Treble</span>
+          <span class="eq-band-val" id="trebleVal">0dB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="modal-backdrop" id="shortcutsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="ri-keyboard-line" style="color: var(--accent-color);"></i>
+          <span>Keyboard Shortcuts</span>
+        </div>
+        <button class="btn-close-modal" id="btnCloseShortcuts">
+          <i class="ri-close-line"></i>
+        </button>
+      </div>
+
+      <div class="shortcut-list">
+        <div class="shortcut-row">
+          <span>Toggle Office Stealth Mode / Boss Key</span>
+          <kbd class="shortcut-key">Esc or `</kbd>
+        </div>
+        <div class="shortcut-row">
+          <span>Play / Pause</span>
+          <kbd class="shortcut-key">Space</kbd>
+        </div>
+        <div class="shortcut-row">
+          <span>Seek Backward 5s</span>
+          <kbd class="shortcut-key">←</kbd>
+        </div>
+        <div class="shortcut-row">
+          <span>Seek Forward 5s</span>
+          <kbd class="shortcut-key">→</kbd>
+        </div>
+        <div class="shortcut-row">
+          <span>Volume Up / Down</span>
+          <kbd class="shortcut-key">↑ / ↓</kbd>
+        </div>
+        <div class="shortcut-row">
+          <span>Mute / Unmute</span>
+          <kbd class="shortcut-key">M</kbd>
+        </div>
+        <div class="shortcut-row">
+          <span>Like / Favorite Track</span>
+          <kbd class="shortcut-key">L</kbd>
+        </div>
+        <div class="shortcut-row">
+          <span>Toggle Shuffle</span>
+          <kbd class="shortcut-key">S</kbd>
+        </div>
+        <div class="shortcut-row">
+          <span>Cycle Repeat (All / One / Off)</span>
+          <kbd class="shortcut-key">R</kbd>
+        </div>
+        <div class="shortcut-row">
+          <span>Toggle Equalizer</span>
+          <kbd class="shortcut-key">E</kbd>
+        </div>
+        <div class="shortcut-row">
+          <span>Toggle Fullscreen</span>
+          <kbd class="shortcut-key">F</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Main Vite Module Entry -->
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>

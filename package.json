@@ -1,0 +1,26 @@
+{
+  "name": "music-player",
+  "version": "1.0.0",
+  "description": "music listening page",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rusty-98/Music-Player.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rusty-98/Music-Player/issues"
+  },
+  "homepage": "https://github.com/Rusty-98/Music-Player#readme",
+  "devDependencies": {
+    "canvas-confetti": "^1.9.4",
+    "vite": "^8.2.2"
+  }
+}
