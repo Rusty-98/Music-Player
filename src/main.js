@@ -23,6 +23,7 @@ class MusicPlayerApp {
     this.repeatMode = 'all'; // 'all', 'one', 'off'
     this.activeFilter = 'all';
     this.searchQuery = '';
+    this.termSearchQuery = '';
 
     // Favorites from LocalStorage
     this.favorites = new Set(JSON.parse(localStorage.getItem('mp_favorites') || '[]'));
@@ -155,6 +156,13 @@ class MusicPlayerApp {
       btnToggleCrt: document.getElementById('btnToggleCrt'),
       lblCrtState: document.getElementById('lblCrtState'),
       termHeaderPrompt: document.getElementById('termHeaderPrompt'),
+      termBannerTrack: document.getElementById('termBannerTrack'),
+      termNowPlayingCard: document.getElementById('termNowPlayingCard'),
+      termNpTitle: document.getElementById('termNpTitle'),
+      termNpArtist: document.getElementById('termNpArtist'),
+      termNpGenre: document.getElementById('termNpGenre'),
+      termNpPid: document.getElementById('termNpPid'),
+      termProcessSearch: document.getElementById('termProcessSearch'),
       termUptime: document.getElementById('termUptime'),
       termCpu: document.getElementById('termCpu'),
       termMem: document.getElementById('termMem'),
@@ -867,6 +875,13 @@ class MusicPlayerApp {
       this.dom.termInput.value = '';
       this.handleTerminalCommand(rawCmd);
     });
+
+    if (this.dom.termProcessSearch) {
+      this.dom.termProcessSearch.addEventListener('input', (e) => {
+        this.termSearchQuery = e.target.value.toLowerCase().trim();
+        this.renderTerminalProcessTable();
+      });
+    }
   }
 
   handleTerminalCommand(cmdStr) {
@@ -1174,9 +1189,25 @@ class MusicPlayerApp {
 
   renderTerminalProcessTable() {
     if (!this.dom.termProcessTableBody) return;
-    this.dom.termQueueCount.textContent = `${this.songs.length} threads`;
 
-    this.dom.termProcessTableBody.innerHTML = this.songs.map((track, idx) => {
+    let songsToDisplay = this.songs;
+    if (this.termSearchQuery) {
+      songsToDisplay = this.songs.filter(s => {
+        const query = this.termSearchQuery.toLowerCase();
+        const pid = String(400 + this.songs.indexOf(s) + 1);
+        return s.title.toLowerCase().includes(query) ||
+               s.artist.toLowerCase().includes(query) ||
+               (s.genre && s.genre.toLowerCase().includes(query)) ||
+               pid.includes(query);
+      });
+    }
+
+    if (this.dom.termQueueCount) {
+      this.dom.termQueueCount.textContent = `${songsToDisplay.length} / ${this.songs.length} threads`;
+    }
+
+    this.dom.termProcessTableBody.innerHTML = songsToDisplay.map((track) => {
+      const idx = this.songs.indexOf(track);
       const pid = 400 + idx + 1;
       const isCurrent = this.currentTrack && track.id === this.currentTrack.id;
       const isRunning = isCurrent && !this.audioEngine.isPaused();
@@ -1184,8 +1215,8 @@ class MusicPlayerApp {
       return `
         <tr class="term-table-row ${isCurrent ? 'active' : ''}" data-index="${idx}">
           <td style="color: var(--term-muted); font-family: monospace;">${pid}</td>
-          <td><b>${track.title}</b> <span style="color: var(--term-muted);">- ${track.artist}</span></td>
-          <td><span style="color: var(--term-highlight);">${track.genre || 'Custom'}</span></td>
+          <td><b>${track.title}</b> <span style="color: var(--term-muted); font-size: 10px;">— ${track.artist}</span></td>
+          <td><span style="color: var(--term-highlight);">${track.genre || 'Audio'}</span></td>
           <td>
             <span style="color: ${isRunning ? 'var(--term-success)' : isCurrent ? 'var(--term-highlight)' : 'var(--term-muted)'}">
               ${isRunning ? '[RUNNING]' : isCurrent ? '[PAUSED]' : '[IDLE]'}
@@ -1213,18 +1244,64 @@ class MusicPlayerApp {
     });
   }
 
-  updateTerminalDisplay() {
-    if (!this.dom.termCurrentTrackName) return;
+  updateTerminalDisplay(rebuildTable = true) {
+    if (!this.currentTrack) return;
     const pid = 400 + this.currentTrackIndex + 1;
-    this.dom.termCurrentTrackName.textContent = `[PID:${pid}] ${this.currentTrack.title} — ${this.currentTrack.artist}`;
-
     const isRunning = !this.audioEngine.isPaused();
-    this.dom.termTrackStatus.textContent = isRunning ? '[ACTIVE]' : '[PAUSED]';
-    this.dom.termTrackStatus.style.color = isRunning ? 'var(--term-success)' : 'var(--term-highlight)';
-    this.dom.termDaemonStatus.textContent = isRunning ? 'RUNNING' : 'IDLE';
-    this.dom.termPlayText.textContent = isRunning ? '[ ⏸ PAUSE ]' : '[ ▶ PLAY ]';
 
-    this.renderTerminalProcessTable();
+    // 1. Terminal Window Header Prompt
+    if (this.dom.termHeaderPrompt) {
+      this.dom.termHeaderPrompt.textContent = `root@mainframe: ~/media [${isRunning ? '▶ PLAY' : '⏸ PAUSE'}: ${this.currentTrack.title} — ${this.currentTrack.artist}]`;
+    }
+
+    // 2. High-Tech ASCII Banner Track Info
+    if (this.dom.termBannerTrack) {
+      this.dom.termBannerTrack.textContent = `${this.currentTrack.title} — ${this.currentTrack.artist}`;
+    }
+
+    // 3. Cyberpunk Now Playing Card (High Visibility)
+    if (this.dom.termNpTitle) this.dom.termNpTitle.textContent = this.currentTrack.title;
+    if (this.dom.termNpArtist) this.dom.termNpArtist.textContent = `${this.currentTrack.artist} • Album: ${this.currentTrack.album || 'Single'} (${this.currentTrack.year || '2024'})`;
+    if (this.dom.termNpGenre) this.dom.termNpGenre.textContent = this.currentTrack.genre || 'Audio';
+    if (this.dom.termNpPid) this.dom.termNpPid.textContent = `PID: ${pid}`;
+
+    // 4. Stream row with glowing formatted info
+    if (this.dom.termCurrentTrackName) {
+      this.dom.termCurrentTrackName.innerHTML = `<span class="term-stream-pid">[PID:${pid}]</span> <span class="term-stream-title">${this.currentTrack.title}</span> <span class="term-stream-artist">— ${this.currentTrack.artist}</span>`;
+    }
+
+    // 5. Track Status Indicators
+    if (this.dom.termTrackStatus) {
+      this.dom.termTrackStatus.textContent = isRunning ? '[ACTIVE]' : '[PAUSED]';
+      this.dom.termTrackStatus.style.color = isRunning ? 'var(--term-success)' : 'var(--term-highlight)';
+    }
+    if (this.dom.termDaemonStatus) {
+      this.dom.termDaemonStatus.textContent = isRunning ? 'RUNNING' : 'IDLE';
+    }
+    if (this.dom.termPlayText) {
+      this.dom.termPlayText.textContent = isRunning ? '[ ⏸ PAUSE ]' : '[ ▶ PLAY ]';
+    }
+
+    if (rebuildTable) {
+      this.renderTerminalProcessTable();
+    } else {
+      // In-place row state update for ultra-smooth 60fps performance
+      const rows = this.dom.termProcessTableBody.querySelectorAll('.term-table-row');
+      rows.forEach(row => {
+        const idx = parseInt(row.dataset.index);
+        const isCurrent = this.currentTrackIndex === idx;
+        row.classList.toggle('active', isCurrent);
+        const stateSpan = row.querySelector('td:nth-child(4) span');
+        const execBtn = row.querySelector('.term-exec-btn');
+        if (stateSpan) {
+          stateSpan.style.color = isCurrent && isRunning ? 'var(--term-success)' : isCurrent ? 'var(--term-highlight)' : 'var(--term-muted)';
+          stateSpan.textContent = isCurrent && isRunning ? '[RUNNING]' : isCurrent ? '[PAUSED]' : '[IDLE]';
+        }
+        if (execBtn) {
+          execBtn.textContent = isCurrent && isRunning ? '[STOP]' : '[EXEC]';
+        }
+      });
+    }
   }
 
   updateTerminalVolText(forceMute) {
@@ -1322,6 +1399,10 @@ class MusicPlayerApp {
     this.renderPlaybar();
     this.renderTrackList();
     this.updateTerminalDisplay();
+
+    if (this.dom.termOutput && autoplay) {
+      this.logTerminal(`[DAEMON] Active stream: [PID:${400 + index + 1}] "${this.currentTrack.title}" — ${this.currentTrack.artist}`, 'term-success');
+    }
   }
 
   nextTrack() {
@@ -1497,8 +1578,20 @@ class MusicPlayerApp {
       this.dom.termPlayText.textContent = isPlaying ? '[ ⏸ PAUSE ]' : '[ ▶ PLAY ]';
     }
 
-    this.renderTrackList();
-    this.updateTerminalDisplay();
+    // High-performance in-place card state toggle (instantaneous, preserves scroll)
+    const cards = this.dom.trackList.querySelectorAll('.track-card');
+    cards.forEach(card => {
+      const id = parseInt(card.dataset.id);
+      const isCurrent = this.currentTrack && id === this.currentTrack.id;
+      card.classList.toggle('active', isCurrent);
+      card.classList.toggle('playing', isCurrent && isPlaying);
+      const icon = card.querySelector('.track-card-play-overlay i');
+      if (icon) {
+        icon.className = isCurrent && isPlaying ? 'ri-pause-fill' : 'ri-play-fill';
+      }
+    });
+
+    this.updateTerminalDisplay(false);
   }
 
   updateProgress(currentTime, duration) {

@@ -1751,6 +1751,133 @@ body.theme-red {
   font-weight: 700;
 }
 
+/* Highly Visible Cyberpunk Song Header Card in Terminal */
+.term-now-playing-card {
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--term-border);
+  border-left: 3px solid var(--term-accent);
+  border-radius: 6px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+.term-now-playing-card:hover {
+  border-color: var(--term-accent);
+  box-shadow: 0 0 12px var(--term-border-glow);
+}
+
+.term-np-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+}
+
+.term-np-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--term-success);
+  box-shadow: 0 0 8px var(--term-success);
+  animation: termPulse 1.5s infinite;
+}
+
+@keyframes termPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.term-np-badge {
+  color: var(--term-success);
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+}
+
+.term-np-tag {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--term-accent);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.term-np-pid {
+  color: var(--term-muted);
+  font-family: monospace;
+}
+
+.term-np-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.term-np-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--term-text);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 8px var(--term-shadow);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.term-np-artist {
+  font-size: 11px;
+  color: var(--term-accent);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.term-stream-pid {
+  color: var(--term-muted);
+  font-family: monospace;
+  margin-right: 4px;
+}
+
+.term-stream-title {
+  color: var(--term-text);
+  font-weight: 700;
+}
+
+.term-stream-artist {
+  color: var(--term-accent);
+  font-weight: 600;
+}
+
+.term-table-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.term-search-inline {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--term-border);
+  border-radius: 4px;
+  color: var(--term-text);
+  font-family: inherit;
+  font-size: 10px;
+  padding: 3px 8px;
+  outline: none;
+  width: 140px;
+  transition: all 0.15s ease;
+}
+
+.term-search-inline:focus {
+  border-color: var(--term-accent);
+  box-shadow: 0 0 6px var(--term-border-glow);
+  width: 180px;
+}
+
 .term-process-row {
   display: flex;
   align-items: center;
@@ -1773,6 +1900,8 @@ body.theme-red {
   overflow: hidden;
   text-overflow: ellipsis;
   text-shadow: 0 0 6px var(--term-shadow);
+  flex: 1;
+  min-width: 0;
 }
 
 /* ASCII Progress Bar & Spectrum */

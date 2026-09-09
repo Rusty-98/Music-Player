@@ -279,7 +279,8 @@
       <div class="term-banner">
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │  <span class="term-accent">AUDIO-KERNEL DAEMON v4.2.0-rt</span> (x86_64-smp-linux)  [SECURITY RING: <span class="term-highlight">0</span>]                                  │
-│  PID: <span class="term-highlight">4928</span> | UPTIME: <span id="termUptime">00:14:22</span> | CPU: <span id="termCpu">4.2%</span> | MEM: <span id="termMem">164MB</span> | DSP BUF: <span class="term-highlight">512b</span> | RATE: <span class="term-accent">48.0kHz</span> | LAT: <span class="term-success">1.2ms</span> | <span class="term-success" id="termDaemonStatus">[RUNNING]</span> │
+│  PID: <span class="term-highlight">4928</span> | UPTIME: <span id="termUptime">00:14:22</span> | CPU: <span id="termCpu">4.2%</span> | MEM: <span id="termMem">164MB</span> | RATE: <span class="term-accent">48.0kHz</span> | LAT: <span class="term-success">1.2ms</span> | <span class="term-success" id="termDaemonStatus">[RUNNING]</span> │
+│  STREAM: <span class="term-accent" id="termBannerTrack">Metamorphosis — INTERWORLD</span>                                                  │
 └────────────────────────────────────────────────────────────────────────────────────────────────────────┘
       </div>
 
@@ -288,10 +289,24 @@
         <!-- LEFT COLUMN: Active Monitor, Telemetry, and Process Table -->
         <div class="term-col term-col-left">
           <!-- Active Stream & ASCII Spectrum Monitor -->
-          <div class="term-box">
+          <div class="term-box term-monitor-box">
             <div class="term-box-header">
               <span class="term-box-title">▶ ACTIVE PROCESS & REAL-TIME SPECTRUM</span>
               <span class="term-tag" id="termTrackStatus">[ACTIVE]</span>
+            </div>
+
+            <!-- Highly Visible Cyberpunk Song Header Card -->
+            <div class="term-now-playing-card" id="termNowPlayingCard">
+              <div class="term-np-meta">
+                <span class="term-np-pulse"></span>
+                <span class="term-np-badge">NOW STREAMING</span>
+                <span class="term-np-tag" id="termNpGenre">Phonk</span>
+                <span class="term-np-pid" id="termNpPid">PID: 401</span>
+              </div>
+              <div class="term-np-main">
+                <div class="term-np-title" id="termNpTitle">Metamorphosis</div>
+                <div class="term-np-artist" id="termNpArtist">INTERWORLD • Metamorphosis (2021)</div>
+              </div>
             </div>
             
             <div class="term-process-row">
@@ -338,8 +353,11 @@
           <!-- Process Queue / HTOP Table -->
           <div class="term-box term-table-box">
             <div class="term-box-header">
-              <span class="term-box-title">📋 HTOP PROCESS QUEUE (Click row or run command)</span>
-              <span class="term-label" id="termQueueCount">24 threads</span>
+              <span class="term-box-title">📋 HTOP PROCESS QUEUE</span>
+              <div class="term-table-tools">
+                <input type="text" id="termProcessSearch" class="term-search-inline" placeholder="🔍 Filter songs...">
+                <span class="term-label" id="termQueueCount">31 threads</span>
+              </div>
             </div>
 
             <div class="term-table-wrapper">

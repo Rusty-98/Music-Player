@@ -438,5 +438,131 @@ export const INITIAL_SONGS = [
       { time: 40, text: "Midnight vibes and fading memories" },
       { time: 55, text: "♪ [Heavy Phonk Bass Drop] ♪" }
     ]
+  },
+  {
+    id: 25,
+    title: "Baby Girl",
+    artist: "Guru Randhawa & Dhvani Bhanushali",
+    album: "Baby Girl",
+    genre: "Punjabi",
+    year: "2020",
+    src: "./YTDown.com_YouTube_Baby-Girl-Guru-Randhawa-Dhvani-Bhanushal_Media_pLhNdJNwGC8_009_128k.mp3",
+    cover: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#ec4899",
+    lyrics: [
+      { time: 0, text: "♪ [Bhangra Pop Beat Intro] ♪" },
+      { time: 8, text: "Kudiye ni tere brown rang ne" },
+      { time: 18, text: "Munde saare kill kar dite" },
+      { time: 28, text: "Baby girl you look so fine" },
+      { time: 40, text: "Grooving with Guru & Dhvani" }
+    ]
+  },
+  {
+    id: 26,
+    title: "Dopamine",
+    artist: "Guru Randhawa",
+    album: "Dopamine",
+    genre: "Punjabi",
+    year: "2024",
+    src: "./YTDown.com_YouTube_GURU-RANDHAWA-DOPAMINE-MV_Media_iOgR7hi90Ac_009_128k.mp3",
+    cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#06b6d4",
+    lyrics: [
+      { time: 0, text: "♪ [High Energy Electronic Synth] ♪" },
+      { time: 8, text: "Dopamine hit jadon tainu vekheya" },
+      { time: 18, text: "Dil mera fast fast beat karda" },
+      { time: 30, text: "Guru Randhawa brand new rush" },
+      { time: 44, text: "Bass drop in the veins" }
+    ]
+  },
+  {
+    id: 27,
+    title: "Kiya Kiya",
+    artist: "Anand Raj Anand & Sunidhi Chauhan",
+    album: "Welcome",
+    genre: "Bollywood",
+    year: "2007",
+    src: "./YTDown.com_YouTube_Kiya-Kiya-Full-Audio-Welcome-Movie-Song-_Media_phcltUsSYbI_009_128k.mp3",
+    cover: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#f59e0b",
+    lyrics: [
+      { time: 0, text: "♪ [Iconic Welcome Movie Groove Intro] ♪" },
+      { time: 12, text: "Kiya kiya kya kiya sanam" },
+      { time: 22, text: "Kiya kiya kya kiya sanam" },
+      { time: 35, text: "Welcome to the party dance floor" },
+      { time: 48, text: "♪ [Upbeat Bollywood Brass & Beats] ♪" }
+    ]
+  },
+  {
+    id: 28,
+    title: "Na Kajre Ki Dhar",
+    artist: "Pankaj Udhas & Sadhana Sargam",
+    album: "Mohra",
+    genre: "Bollywood",
+    year: "1994",
+    src: "./YTDown.com_YouTube_Na-Kajre-Ki-Dhar-With-Lyrics-Suniel-Shet_Media_C_wxaIOPMZk_009_128k.mp3",
+    cover: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#10b981",
+    lyrics: [
+      { time: 0, text: "♪ [Melodious Flute & Santoor Intro] ♪" },
+      { time: 14, text: "Na kajre ki dhar, na motiyon ke haar" },
+      { time: 28, text: "Na koi kiya singaar, phir bhi kitni sundar ho" },
+      { time: 45, text: "Tum kitni sundar ho..." },
+      { time: 60, text: "♪ [Timeless Romantic Ghazal Melody] ♪" }
+    ]
+  },
+  {
+    id: 29,
+    title: "Imaginary",
+    artist: "Imran Khan",
+    album: "Imaginary",
+    genre: "Punjabi",
+    year: "2015",
+    src: "./YTDown.com_YouTube_Official-Music-Video-Imaginary-Imran-Kha_Media_eBI23_Sjfeo_009_128k.mp3",
+    cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#6366f1",
+    lyrics: [
+      { time: 0, text: "♪ [Imran Khan Dutch Urban Beats] ♪" },
+      { time: 10, text: "Let's go girl, let's fly away" },
+      { time: 20, text: "Kakh vi na reha mere palle ni" },
+      { time: 30, text: "You're my imaginary girl" },
+      { time: 45, text: "Bass dropping worldwide" }
+    ]
+  },
+  {
+    id: 30,
+    title: "Spain",
+    artist: "Jassa Dhillon x Thiarajxtt",
+    album: "VIBIN",
+    genre: "Punjabi",
+    year: "2023",
+    src: "./YTDown.com_YouTube_Spain-Official-Video-with-Extended-Versi_Media_c20XsM9BWEM_009_128k.mp3",
+    cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#ea580c",
+    lyrics: [
+      { time: 0, text: "♪ [Spanish Guitar x Heavy Punjabi 808 Trap] ♪" },
+      { time: 10, text: "Spain walon flight seedhi aundi jatt di" },
+      { time: 22, text: "Jassa Dhillon & Thiarajxtt on the beat" },
+      { time: 34, text: "Vairi saare khunje laye hoye ne" },
+      { time: 48, text: "♪ [Acoustic Spanish Riff & Drill Bass] ♪" }
+    ]
+  },
+  {
+    id: 31,
+    title: "Yeh Haseen Vadiyan",
+    artist: "A.R. Rahman, S.P.B & K.S. Chithra",
+    album: "Roja",
+    genre: "Bollywood",
+    year: "1992",
+    src: "./YTDown.com_YouTube_Yeh-Haseen-Vadiyan-Roja-A-R-Rahman-S-P-B_Media_5kZ5o-oM0RI_009_128k.mp3",
+    cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#38bdf8",
+    lyrics: [
+      { time: 0, text: "♪ [Divine Mountain Symphony by A.R. Rahman] ♪" },
+      { time: 15, text: "Yeh haseen vadiyan, yeh khula aasmaan" },
+      { time: 28, text: "Aa gaye hum kahan, aye mere saajna" },
+      { time: 42, text: "In baharon mein dil ki kali khil gayi" },
+      { time: 58, text: "Mujhko tum jo mile, har khushi mil gayi..." }
+    ]
   }
 ];
