@@ -1,7 +1,7 @@
 export class AudioEngine {
   constructor() {
     this.audio = new Audio();
-    this.audio.preload = "metadata";
+    this.audio.preload = "auto";
 
     this.audioCtx = null;
     this.source = null;
@@ -36,6 +36,8 @@ export class AudioEngine {
 
     try {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+
       this.audioCtx = new AudioContextClass();
 
       this.source = this.audioCtx.createMediaElementSource(this.audio);
@@ -94,14 +96,14 @@ export class AudioEngine {
 
       this.isInitialized = true;
     } catch (e) {
-      console.warn("Web Audio API not fully available or blocked by CORS, falling back to direct HTML5 Audio:", e);
+      console.warn("Web Audio API initialized in fallback mode:", e);
     }
   }
 
   ensureContextRunning() {
     this.initWebAudio();
     if (this.audioCtx && this.audioCtx.state === 'suspended') {
-      this.audioCtx.resume();
+      this.audioCtx.resume().catch(() => {});
     }
   }
 
@@ -132,38 +134,45 @@ export class AudioEngine {
     });
 
     this.audio.addEventListener("error", (e) => {
-      console.error("Audio error:", e);
-      if (this.callbacks.onError) this.callbacks.onError(e);
+      console.warn("Audio element encountered playback error for source:", this.audio.src, e);
+      if (this.callbacks.onError) {
+        this.callbacks.onError(e);
+      }
     });
   }
 
-  loadTrack(track, autoplay = false) {
-    this.currentTrack = track;
-    if (track.src.startsWith('http://') || track.src.startsWith('https://')) {
-      this.audio.crossOrigin = "anonymous";
-    } else {
-      this.audio.removeAttribute('crossorigin');
-    }
-    this.audio.src = track.src;
-    this.audio.playbackRate = this.playbackRate;
-    this.audio.load();
-
-    this.updateMediaSession(track);
-
-    if (autoplay) {
-      this.play();
-    }
+  setCallbacks(callbacks) {
+    this.callbacks = { ...this.callbacks, ...callbacks };
   }
 
-  async play() {
-    this.ensureContextRunning();
-    try {
-      await this.audio.play();
-      return true;
-    } catch (err) {
-      console.warn("Playback prevented or interrupted:", err);
-      return false;
+  loadTrack(track, autoPlay = true) {
+    this.currentTrack = track;
+    if (!track || !track.src) return Promise.resolve(false);
+
+    this.audio.src = track.src;
+    this.audio.load();
+
+    if (autoPlay) {
+      return this.play();
     }
+    return Promise.resolve(true);
+  }
+
+  play() {
+    this.ensureContextRunning();
+    const playPromise = this.audio.play();
+    if (playPromise !== undefined) {
+      return playPromise
+        .then(() => true)
+        .catch((err) => {
+          // Handled abort or autoplay policy block
+          if (err.name !== 'AbortError') {
+            console.warn("Playback prevented or error:", err);
+          }
+          return false;
+        });
+    }
+    return Promise.resolve(true);
   }
 
   pause() {
@@ -179,29 +188,49 @@ export class AudioEngine {
     }
   }
 
-  seek(seconds) {
-    if (Number.isFinite(seconds) && seconds >= 0) {
-      this.audio.currentTime = Math.min(seconds, this.audio.duration || seconds);
+  seek(timeInSeconds) {
+    if (Number.isFinite(timeInSeconds)) {
+      const duration = this.audio.duration || 0;
+      const target = Math.max(0, Math.min(timeInSeconds, duration || timeInSeconds));
+      this.audio.currentTime = target;
     }
   }
 
-  seekByPercent(percent) {
+  seekRelative(deltaSeconds) {
+    const duration = this.audio.duration || 0;
+    const newTime = Math.max(0, Math.min(this.audio.currentTime + deltaSeconds, duration));
+    this.audio.currentTime = newTime;
+  }
+
+  seekPercentage(percent) {
     if (this.audio.duration) {
-      this.audio.currentTime = (percent / 100) * this.audio.duration;
+      const clamped = Math.max(0, Math.min(100, percent));
+      this.audio.currentTime = (clamped / 100) * this.audio.duration;
     }
   }
 
-  setVolume(volume) {
-    this.volume = Math.max(0, Math.min(1, volume));
+  setVolume(val) {
+    this.volume = Math.max(0, Math.min(1, val));
     if (!this.isMuted) {
       this.audio.volume = this.volume;
     }
   }
 
+  setVolumeRelative(delta) {
+    const newVol = Math.max(0, Math.min(1, this.volume + delta));
+    this.setVolume(newVol);
+    return this.volume;
+  }
+
   toggleMute() {
     this.isMuted = !this.isMuted;
-    this.audio.volume = this.isMuted ? 0 : this.volume;
+    this.audio.muted = this.isMuted;
     return this.isMuted;
+  }
+
+  setMuted(muted) {
+    this.isMuted = !!muted;
+    this.audio.muted = this.isMuted;
   }
 
   setPlaybackRate(rate) {
@@ -209,40 +238,25 @@ export class AudioEngine {
     this.audio.playbackRate = rate;
   }
 
-  setPan(panValue) {
+  setEqualizer(bassGain, midGain, trebleGain) {
+    if (this.bassFilter) this.bassFilter.gain.value = bassGain;
+    if (this.midFilter) this.midFilter.gain.value = midGain;
+    if (this.trebleFilter) this.trebleFilter.gain.value = trebleGain;
+  }
+
+  setPan(panVal) {
     if (this.panner) {
-      this.panner.pan.setValueAtTime(panValue, this.audioCtx ? this.audioCtx.currentTime : 0);
+      this.panner.pan.value = Math.max(-1, Math.min(1, panVal));
     }
-  }
-
-  setEQ(bass = 0, mid = 0, treble = 0) {
-    const time = this.audioCtx ? this.audioCtx.currentTime : 0;
-    if (this.bassFilter) this.bassFilter.gain.setValueAtTime(bass, time);
-    if (this.midFilter) this.midFilter.gain.setValueAtTime(mid, time);
-    if (this.trebleFilter) this.trebleFilter.gain.setValueAtTime(treble, time);
-  }
-
-  applyPreset(presetName) {
-    const presets = {
-      flat: [0, 0, 0],
-      bass: [9, -2, 2],
-      vocal: [-3, 7, 3],
-      edm: [8, 1, 6],
-      rock: [6, -3, 7],
-      chill: [4, 3, 5]
-    };
-    const gains = presets[presetName.toLowerCase()] || presets.flat;
-    this.setEQ(...gains);
-    return gains;
   }
 
   getFrequencyData(array) {
     if (this.analyser) {
       this.analyser.getByteFrequencyData(array);
     } else {
-      // Simulate frequency pulses if analyser not initialized yet
+      // Simulate synthetic values if Web Audio is suspended or disabled
       for (let i = 0; i < array.length; i++) {
-        array[i] = this.audio.paused ? 0 : Math.floor(Math.sin(Date.now() * 0.005 + i * 0.2) * 60 + 80);
+        array[i] = !this.audio.paused ? Math.floor(Math.random() * 128) : 0;
       }
     }
   }
@@ -250,27 +264,23 @@ export class AudioEngine {
   getTimeDomainData(array) {
     if (this.analyser) {
       this.analyser.getByteTimeDomainData(array);
-    } else {
-      for (let i = 0; i < array.length; i++) {
-        array[i] = 128;
-      }
     }
   }
 
-  getAnalyserFrequencyBinCount() {
-    return this.analyser ? this.analyser.frequencyBinCount : 256;
+  isPlaying() {
+    return !this.audio.paused && !this.audio.ended && this.audio.readyState > 2;
   }
 
-  updateMediaSession(track) {
-    if ('mediaSession' in navigator && track) {
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: track.title,
-        artist: track.artist,
-        album: track.album || 'Music Player',
-        artwork: [
-          { src: track.cover, sizes: '512x512', type: 'image/jpeg' }
-        ]
-      });
-    }
+  getCurrentTime() {
+    return this.audio.currentTime || 0;
+  }
+
+  getDuration() {
+    return this.audio.duration || 0;
+  }
+
+  stop() {
+    this.audio.pause();
+    this.audio.currentTime = 0;
   }
 }

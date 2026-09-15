@@ -6,7 +6,7 @@ export const INITIAL_SONGS = [
     album: "Metamorphosis",
     genre: "Phonk",
     year: "2021",
-    src: "./1.mp3",
+    src: "./metamorphosis.mp3",
     cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
     accentColor: "#a855f7",
     lyrics: [
@@ -27,7 +27,7 @@ export const INITIAL_SONGS = [
     album: "Rapture Phonk",
     genre: "Phonk",
     year: "2022",
-    src: "./2.mp3",
+    src: "./rapture.mp3",
     cover: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80",
     accentColor: "#ec4899",
     lyrics: [
@@ -46,7 +46,7 @@ export const INITIAL_SONGS = [
     album: "Starboy",
     genre: "Pop / R&B",
     year: "2016",
-    src: "./3.mp3",
+    src: "./starboy.mp3",
     cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80",
     accentColor: "#ef4444",
     lyrics: [
@@ -68,7 +68,7 @@ export const INITIAL_SONGS = [
     album: "Still Rollin",
     genre: "Punjabi",
     year: "2023",
-    src: "./4.mp3",
+    src: "./cheques.mp3",
     cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80",
     accentColor: "#f59e0b",
     lyrics: [
@@ -88,7 +88,7 @@ export const INITIAL_SONGS = [
     album: "Chill Study Beats",
     genre: "Lo-Fi / Chill",
     year: "2023",
-    src: "./5.mp3",
+    src: "./lofi-study.mp3",
     cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
     accentColor: "#06b6d4",
     lyrics: [
@@ -107,7 +107,7 @@ export const INITIAL_SONGS = [
     album: "Tokyo Ghoul OST",
     genre: "Anime",
     year: "2014",
-    src: "./6.mp3",
+    src: "./unravel.mp3",
     cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
     accentColor: "#6366f1",
     lyrics: [
@@ -129,7 +129,7 @@ export const INITIAL_SONGS = [
     album: "Page One",
     genre: "Punjabi",
     year: "2015",
-    src: "./7.mp3",
+    src: "./patola.mp3",
     cover: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&auto=format&fit=crop&q=80",
     accentColor: "#10b981",
     lyrics: [
@@ -148,7 +148,7 @@ export const INITIAL_SONGS = [
     album: "Naruto Shippuden OST",
     genre: "Anime",
     year: "2008",
-    src: "./8.mp3",
+    src: "./itachi-theme.mp3",
     cover: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
     accentColor: "#dc2626",
     lyrics: [
@@ -166,7 +166,7 @@ export const INITIAL_SONGS = [
     album: "Hurry Up Tomorrow",
     genre: "Pop / R&B",
     year: "2024",
-    src: "./YTDown.com_YouTube_The-Weeknd-Playboi-Carti-Timeless_Media_5EpyN_6dqyk_009_128k.mp3",
+    src: "./timeless.mp3",
     cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80",
     accentColor: "#3b82f6",
     lyrics: [
@@ -184,7 +184,7 @@ export const INITIAL_SONGS = [
     album: "The Idol OST",
     genre: "Pop / R&B",
     year: "2023",
-    src: "./YTDown.com_YouTube_The-Weeknd-JENNIE-Lily-Rose-Depp-One-Of-_Media_Mx92lTYxrJQ_009_128k.mp3",
+    src: "./one-of-the-girls.mp3",
     cover: "https://images.unsplash.com/photo-1520523839898-50712825e3a7?w=600&auto=format&fit=crop&q=80",
     accentColor: "#d946ef",
     lyrics: [
@@ -202,7 +202,7 @@ export const INITIAL_SONGS = [
     album: "Four You",
     genre: "Punjabi",
     year: "2023",
-    src: "./YTDown.com_YouTube_I-REALLY-DO-MUSIC-VIDEO-KARAN-AUJLA-IKKY_Media_K9R7KcaettM_009_128k.mp3",
+    src: "./i-really-do.mp3",
     cover: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=600&auto=format&fit=crop&q=80",
     accentColor: "#f97316",
     lyrics: [
@@ -220,7 +220,7 @@ export const INITIAL_SONGS = [
     album: "Making Memories",
     genre: "Punjabi",
     year: "2023",
-    src: "./YTDown.com_YouTube_Jee-Ni-Lagda-Full-Video-Karan-Aujla-I-Ma_Media_BXNxrT59MzQ_009_128k.mp3",
+    src: "./jee-ni-lagda.mp3",
     cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&auto=format&fit=crop&q=80",
     accentColor: "#eab308",
     lyrics: [
@@ -238,7 +238,7 @@ export const INITIAL_SONGS = [
     album: "Street Dreams",
     genre: "Punjabi",
     year: "2024",
-    src: "./YTDown.com_YouTube_Karan-Aujla-Ikky-HIM-Official-Audio_Media_eoYsV5RwyA_009_128k.mp3",
+    src: "./him.mp3",
     cover: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=80",
     accentColor: "#ea580c",
     lyrics: [
@@ -256,7 +256,7 @@ export const INITIAL_SONGS = [
     album: "Four You",
     genre: "Punjabi",
     year: "2023",
-    src: "./YTDown.com_YouTube_Karan-Aujla-Ikky-You-re-U-Tho-Official-A_Media_xciwYxZuxog_009_128k.mp3",
+    src: "./youre-u-tho.mp3",
     cover: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=600&auto=format&fit=crop&q=80",
     accentColor: "#d97706",
     lyrics: [
@@ -273,7 +273,7 @@ export const INITIAL_SONGS = [
     album: "White Brown Black",
     genre: "Punjabi",
     year: "2022",
-    src: "./YTDown.com_YouTube_White-Brown-Black-Avvy-Sra-Karan-Aujla-J_Media_BtQp2U6hJII_009_128k.mp3",
+    src: "./white-brown-black.mp3",
     cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80",
     accentColor: "#8b5cf6",
     lyrics: [
@@ -290,7 +290,7 @@ export const INITIAL_SONGS = [
     album: "Shkini",
     genre: "Punjabi",
     year: "2024",
-    src: "./YTDown.com_YouTube_GURU-RANDHAWA-SHKINI-MV_Media_4RSxIX2I6Ic_009_128k.mp3",
+    src: "./shkini.mp3",
     cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80",
     accentColor: "#e11d48",
     lyrics: [
@@ -305,9 +305,9 @@ export const INITIAL_SONGS = [
     title: "Kalyani",
     artist: "Shreya Ghoshal, ARJN, KDS",
     album: "Kalyani",
-    genre: "Indie / Classical",
+    genre: "Classical / Indie",
     year: "2024",
-    src: "./YTDown.com_YouTube_KALYANI-with-Shreya-Ghoshal-ARJN-KDS-FIF_Media_z5y8Clp_TdE_009_128k.mp3",
+    src: "./kalyani.mp3",
     cover: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=600&auto=format&fit=crop&q=80",
     accentColor: "#f43f5e",
     lyrics: [
@@ -324,7 +324,7 @@ export const INITIAL_SONGS = [
     album: "Pavazha Malli",
     genre: "Indie / Pop",
     year: "2024",
-    src: "./YTDown.com_YouTube_SaiAbhyankkar-Pavazha-Malli-Music-Video_Media_b68HETiNO98_009_128k.mp3",
+    src: "./pavazha-malli.mp3",
     cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80",
     accentColor: "#06b6d4",
     lyrics: [
@@ -341,7 +341,7 @@ export const INITIAL_SONGS = [
     album: "SOLO",
     genre: "Punjabi",
     year: "2023",
-    src: "./YTDown.com_YouTube_Samne-Rehni-E-Full-Video-SOLO-Pav-Dharia_Media_rrlY04Hmb4U_009_128k.mp3",
+    src: "./samne-rehni-e.mp3",
     cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&auto=format&fit=crop&q=80",
     accentColor: "#10b981",
     lyrics: [
@@ -358,7 +358,7 @@ export const INITIAL_SONGS = [
     album: "Leo",
     genre: "Punjabi",
     year: "2024",
-    src: "./YTDown.com_YouTube_Shubh-Bounce-Official-Music-Video_Media_UX740Wf7OUc_009_128k.mp3",
+    src: "./bounce.mp3",
     cover: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&auto=format&fit=crop&q=80",
     accentColor: "#14b8a6",
     lyrics: [
@@ -376,7 +376,7 @@ export const INITIAL_SONGS = [
     album: "Psychedelic Waves",
     genre: "Indie / Psych",
     year: "2023",
-    src: "./YTDown.com_YouTube_Tame-Impala-Dracula-Lyrics_Media_HWyzKmXquJk_009_128k.mp3",
+    src: "./dracula.mp3",
     cover: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&auto=format&fit=crop&q=80",
     accentColor: "#8b5cf6",
     lyrics: [
@@ -394,7 +394,7 @@ export const INITIAL_SONGS = [
     album: "Indie Odyssey",
     genre: "Indie / Chill",
     year: "2023",
-    src: "./YTDown.com_YouTube_Nanku-Yezdi-Official-Visualiser-2023_Media_RzR1-1SQ25s_009_128k.mp3",
+    src: "./yezdi.mp3",
     cover: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=80",
     accentColor: "#0ea5e9",
     lyrics: [
@@ -411,7 +411,7 @@ export const INITIAL_SONGS = [
     album: "SIX",
     genre: "Punjabi",
     year: "2024",
-    src: "./YTDown.com_YouTube_GURU-RANDHAWA-SIX-MV_Media_PEdDI1A17qc_009_128k.mp3",
+    src: "./six.mp3",
     cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&auto=format&fit=crop&q=80",
     accentColor: "#f43f5e",
     lyrics: [
@@ -428,7 +428,7 @@ export const INITIAL_SONGS = [
     album: "Viral Phonk Remix",
     genre: "Phonk",
     year: "2023",
-    src: "./YTDown.com_YouTube_Under-The-Influence-x-I-Was-Never-There-_Media_9eIhjXZcwyY_009_128k.mp3",
+    src: "./under-the-influence.mp3",
     cover: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=80",
     accentColor: "#8b5cf6",
     lyrics: [
@@ -446,7 +446,7 @@ export const INITIAL_SONGS = [
     album: "Baby Girl",
     genre: "Punjabi",
     year: "2020",
-    src: "./YTDown.com_YouTube_Baby-Girl-Guru-Randhawa-Dhvani-Bhanushal_Media_pLhNdJNwGC8_009_128k.mp3",
+    src: "./baby-girl.mp3",
     cover: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&auto=format&fit=crop&q=80",
     accentColor: "#ec4899",
     lyrics: [
@@ -464,7 +464,7 @@ export const INITIAL_SONGS = [
     album: "Dopamine",
     genre: "Punjabi",
     year: "2024",
-    src: "./YTDown.com_YouTube_GURU-RANDHAWA-DOPAMINE-MV_Media_iOgR7hi90Ac_009_128k.mp3",
+    src: "./dopamine.mp3",
     cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&auto=format&fit=crop&q=80",
     accentColor: "#06b6d4",
     lyrics: [
@@ -482,7 +482,7 @@ export const INITIAL_SONGS = [
     album: "Welcome",
     genre: "Bollywood",
     year: "2007",
-    src: "./YTDown.com_YouTube_Kiya-Kiya-Full-Audio-Welcome-Movie-Song-_Media_phcltUsSYbI_009_128k.mp3",
+    src: "./kiya-kiya.mp3",
     cover: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&auto=format&fit=crop&q=80",
     accentColor: "#f59e0b",
     lyrics: [
@@ -500,7 +500,7 @@ export const INITIAL_SONGS = [
     album: "Mohra",
     genre: "Bollywood",
     year: "1994",
-    src: "./YTDown.com_YouTube_Na-Kajre-Ki-Dhar-With-Lyrics-Suniel-Shet_Media_C_wxaIOPMZk_009_128k.mp3",
+    src: "./na-kajre-ki-dhar.mp3",
     cover: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=600&auto=format&fit=crop&q=80",
     accentColor: "#10b981",
     lyrics: [
@@ -518,7 +518,7 @@ export const INITIAL_SONGS = [
     album: "Imaginary",
     genre: "Punjabi",
     year: "2015",
-    src: "./YTDown.com_YouTube_Official-Music-Video-Imaginary-Imran-Kha_Media_eBI23_Sjfeo_009_128k.mp3",
+    src: "./imaginary.mp3",
     cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
     accentColor: "#6366f1",
     lyrics: [
@@ -536,7 +536,7 @@ export const INITIAL_SONGS = [
     album: "VIBIN",
     genre: "Punjabi",
     year: "2023",
-    src: "./YTDown.com_YouTube_Spain-Official-Video-with-Extended-Versi_Media_c20XsM9BWEM_009_128k.mp3",
+    src: "./spain.mp3",
     cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80",
     accentColor: "#ea580c",
     lyrics: [
@@ -554,7 +554,7 @@ export const INITIAL_SONGS = [
     album: "Roja",
     genre: "Bollywood",
     year: "1992",
-    src: "./YTDown.com_YouTube_Yeh-Haseen-Vadiyan-Roja-A-R-Rahman-S-P-B_Media_5kZ5o-oM0RI_009_128k.mp3",
+    src: "./yeh-haseen-vadiyan.mp3",
     cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
     accentColor: "#38bdf8",
     lyrics: [
@@ -564,5 +564,111 @@ export const INITIAL_SONGS = [
       { time: 42, text: "In baharon mein dil ki kali khil gayi" },
       { time: 58, text: "Mujhko tum jo mile, har khushi mil gayi..." }
     ]
+  },
+  {
+    id: 32,
+    title: "Shambho Shankar",
+    artist: "Hansraj Raghuwanshi",
+    album: "Shiv Stuti",
+    genre: "Devotional / Meditative",
+    year: "2023",
+    src: "./shambho-shankar.mp3",
+    cover: "https://images.unsplash.com/photo-1545235617-9465d2a55698?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#0ea5e9",
+    lyrics: [
+      { time: 0, text: "♪ [Sacred Damru & Flute Resonance] ♪" },
+      { time: 15, text: "Shambho Shankar Namah Shivay" },
+      { time: 30, text: "Bhole Bhandari kripa karo" },
+      { time: 50, text: "Har Har Mahadev, cosmic meditation" }
+    ]
+  },
+  {
+    id: 33,
+    title: "Shiv Shiv Shankara",
+    artist: "Traditional Sanskrit",
+    album: "Divine Echoes",
+    genre: "Devotional / Meditative",
+    year: "2023",
+    src: "./shiv-shiv.mp3",
+    cover: "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#6366f1",
+    lyrics: [
+      { time: 0, text: "♪ [Trance Chants & Bell Resonance] ♪" },
+      { time: 12, text: "Shiv Shiv Shankara Hari Om" },
+      { time: 28, text: "Eternal peace flows through the soul" },
+      { time: 45, text: "Transcendent consciousness awakening" }
+    ]
+  },
+  {
+    id: 34,
+    title: "Pahadi Sunset Melody",
+    artist: "Himalayan Folk Ensemble",
+    album: "Mountain Echoes",
+    genre: "Lo-Fi / Chill",
+    year: "2024",
+    src: "./pahadi.m4a",
+    cover: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#10b981",
+    lyrics: [
+      { time: 0, text: "♪ [Traditional Mountain Flute & Acoustic Strings] ♪" },
+      { time: 15, text: "Gentle breeze flowing across pine valleys" },
+      { time: 35, text: "Sunset glow upon the misty peaks" },
+      { time: 60, text: "Serenity in the high hills" }
+    ]
+  },
+  {
+    id: 35,
+    title: "Flute Meditation (Zen Vibe)",
+    artist: "Zen Soundscapes",
+    album: "Deep Concentration",
+    genre: "Lo-Fi / Chill",
+    year: "2024",
+    src: "./flute-meditation.m4a",
+    cover: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#14b8a6",
+    lyrics: [
+      { time: 0, text: "♪ [Calming Bamboo Flute & Ambient Water] ♪" },
+      { time: 20, text: "Deep focus & mindful awareness" },
+      { time: 45, text: "Clarity of thoughts, tranquil mind" },
+      { time: 70, text: "Pure meditation & calm workspace" }
+    ]
+  }
+];
+
+export const SYSTEM_PLAYLISTS = [
+  {
+    id: "pl_office",
+    name: "🎧 Office Stealth",
+    icon: "ri-briefcase-4-line",
+    description: "Quiet focus, mellow beats & discreet tracks for work",
+    trackIds: [5, 22, 21, 34, 35, 17, 28, 31]
+  },
+  {
+    id: "pl_focus",
+    name: "💻 Focus / Coding",
+    icon: "ri-code-s-slash-line",
+    description: "High-productivity Phonk, Lo-Fi, and electronic flow",
+    trackIds: [1, 2, 5, 8, 6, 24, 34, 35]
+  },
+  {
+    id: "pl_chill",
+    name: "🌙 Chill & Meditate",
+    icon: "ri-moon-clear-line",
+    description: "Soothing acoustic melodies, flutes and peaceful ambiance",
+    trackIds: [5, 22, 34, 35, 32, 33, 28, 31]
+  },
+  {
+    id: "pl_punjabi",
+    name: "🔥 Punjabi Hits",
+    icon: "ri-fire-line",
+    description: "Karan Aujla, Guru Randhawa, Shubh, Bohemia & Imran Khan",
+    trackIds: [4, 7, 11, 12, 13, 14, 15, 16, 19, 20, 23, 25, 26, 29, 30]
+  },
+  {
+    id: "pl_phonk",
+    name: "⚡ Phonk Rush",
+    icon: "ri-flashlight-line",
+    description: "Heavy bass drift phonk and adrenaline boost",
+    trackIds: [1, 2, 24, 6]
   }
 ];
