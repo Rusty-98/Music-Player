@@ -632,6 +632,60 @@ export const INITIAL_SONGS = [
       { time: 45, text: "Clarity of thoughts, tranquil mind" },
       { time: 70, text: "Pure meditation & calm workspace" }
     ]
+  },
+  {
+    id: 36,
+    title: "Jo Bhi Kasmein",
+    artist: "Udit Narayan & Alka Yagnik",
+    album: "Raaz",
+    genre: "Bollywood",
+    year: "2002",
+    src: "./jo-bhi-kasmein.mp3",
+    cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#f43f5e",
+    lyrics: [
+      { time: 0, text: "♪ [Iconic Acoustic Guitar & String Intro] ♪" },
+      { time: 14, text: "Jo bhi kasmein khai thi humne" },
+      { time: 26, text: "Vaada kiya tha jo milke" },
+      { time: 38, text: "Bhulenge na hum to sanam" },
+      { time: 52, text: "Chahe zamana rooth jaye..." },
+      { time: 68, text: "♪ [Melodious Flute & Violin Solo] ♪" }
+    ]
+  },
+  {
+    id: 37,
+    title: "Kina Chir",
+    artist: "The PropheC",
+    album: "The Season",
+    genre: "Punjabi",
+    year: "2021",
+    src: "./kina-chir.mp3",
+    cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#8b5cf6",
+    lyrics: [
+      { time: 0, text: "♪ [The PropheC signature synth & ambient guitar] ♪" },
+      { time: 10, text: "Kina chir ho gaya ae mileya nu" },
+      { time: 20, text: "Dil tarasda ae tainu vekhan nu" },
+      { time: 32, text: "Aaja ve sajna kar intezaar" },
+      { time: 46, text: "Har pal teri yaad satandi" }
+    ]
+  },
+  {
+    id: 38,
+    title: "Shiv Swarnamala Stuti",
+    artist: "Ramesh Bhai Oza",
+    album: "Sacred Stutis",
+    genre: "Devotional / Meditative",
+    year: "2023",
+    src: "./shiv-swarnamala-stuti.mp3",
+    cover: "https://images.unsplash.com/photo-1545235617-9465d2a55698?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#0ea5e9",
+    lyrics: [
+      { time: 0, text: "♪ [Sacred Shankh & Temple Chants] ♪" },
+      { time: 14, text: "Om Namah Shivaya Swarnamala Stuti" },
+      { time: 30, text: "Kailash Pati Mahadev Vandana" },
+      { time: 50, text: "Divine peace and universal consciousness" }
+    ]
   }
 ];
 
@@ -641,28 +695,28 @@ export const SYSTEM_PLAYLISTS = [
     name: "🎧 Office Stealth",
     icon: "ri-briefcase-4-line",
     description: "Quiet focus, mellow beats & discreet tracks for work",
-    trackIds: [5, 22, 21, 34, 35, 17, 28, 31]
+    trackIds: [5, 22, 21, 34, 35, 17, 28, 31, 36]
   },
   {
     id: "pl_focus",
     name: "💻 Focus / Coding",
     icon: "ri-code-s-slash-line",
     description: "High-productivity Phonk, Lo-Fi, and electronic flow",
-    trackIds: [1, 2, 5, 8, 6, 24, 34, 35]
+    trackIds: [1, 2, 5, 8, 6, 24, 34, 35, 37]
   },
   {
     id: "pl_chill",
     name: "🌙 Chill & Meditate",
     icon: "ri-moon-clear-line",
     description: "Soothing acoustic melodies, flutes and peaceful ambiance",
-    trackIds: [5, 22, 34, 35, 32, 33, 28, 31]
+    trackIds: [5, 22, 34, 35, 32, 33, 38, 28, 31, 36]
   },
   {
     id: "pl_punjabi",
     name: "🔥 Punjabi Hits",
     icon: "ri-fire-line",
     description: "Karan Aujla, Guru Randhawa, Shubh, Bohemia & Imran Khan",
-    trackIds: [4, 7, 11, 12, 13, 14, 15, 16, 19, 20, 23, 25, 26, 29, 30]
+    trackIds: [4, 7, 11, 12, 13, 14, 15, 16, 19, 20, 23, 25, 26, 29, 30, 37]
   },
   {
     id: "pl_phonk",
