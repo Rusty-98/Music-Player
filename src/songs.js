@@ -686,6 +686,97 @@ export const INITIAL_SONGS = [
       { time: 30, text: "Kailash Pati Mahadev Vandana" },
       { time: 50, text: "Divine peace and universal consciousness" }
     ]
+  },
+  {
+    id: 39,
+    title: "52 Bars",
+    artist: "Karan Aujla x Ikky",
+    album: "Four You",
+    genre: "Punjabi",
+    year: "2023",
+    src: "./52-bars.mp3",
+    cover: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#f97316",
+    lyrics: [
+      { time: 0, text: "♪ [Ikky Heavy Trap Synth Build] ♪" },
+      { time: 8, text: "Ikky! Karan Aujla!" },
+      { time: 14, text: "Bhavein badle zamana sadda daur ni badalna" },
+      { time: 24, text: "52 baran vich pura itihaas likhta" },
+      { time: 36, text: "Geetan vich jatt da swag bolda" },
+      { time: 50, text: "Worldwide chale sadda naah kudiye" }
+    ]
+  },
+  {
+    id: 40,
+    title: "Low Fade",
+    artist: "Karan Aujla",
+    album: "Street Dreams",
+    genre: "Punjabi",
+    year: "2024",
+    src: "./low-fade.mp3",
+    cover: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#ea580c",
+    lyrics: [
+      { time: 0, text: "♪ [Fresh Drill Bassline & Hi-Hats] ♪" },
+      { time: 9, text: "Low fade cut te shauq nawabi" },
+      { time: 18, text: "Aujla da flow sidha dil ch vasda" },
+      { time: 28, text: "Kardi mandeer follow sada style" },
+      { time: 42, text: "Street Dreams on loop!" }
+    ]
+  },
+  {
+    id: 41,
+    title: "Ashke",
+    artist: "Karan Aujla x Mxrci",
+    album: "Aujla Szn",
+    genre: "Punjabi",
+    year: "2024",
+    src: "./ashke.mp3",
+    cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#10b981",
+    lyrics: [
+      { time: 0, text: "♪ [Mxrci signature Dhol & Bass groove] ♪" },
+      { time: 10, text: "Munde aakhde ne ashke ni ashke" },
+      { time: 20, text: "Saadi taur vekh vairi gaye thas ke" },
+      { time: 32, text: "Karan Aujla Mxrci on the track" },
+      { time: 45, text: "Nachdi dunia saadi beat te" }
+    ]
+  },
+  {
+    id: 42,
+    title: "Daytona",
+    artist: "Karan Aujla x Ikky",
+    album: "Daytona",
+    genre: "Punjabi",
+    year: "2025",
+    src: "./daytona.mp3",
+    cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#eab308",
+    lyrics: [
+      { time: 0, text: "♪ [High Octane Synth & Rolling Bass] ♪" },
+      { time: 8, text: "Speeding on the highway in a Daytona" },
+      { time: 18, text: "Karan Aujla Ikky back to rule" },
+      { time: 30, text: "Top di gaddi te top da flow" },
+      { time: 44, text: "Never slow down!" }
+    ]
+  },
+  {
+    id: 43,
+    title: "Winning Speech",
+    artist: "Karan Aujla x Mxrci",
+    album: "Winning Speech",
+    genre: "Punjabi",
+    year: "2024",
+    src: "./winning-speech.mp3",
+    cover: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&auto=format&fit=crop&q=80",
+    accentColor: "#d946ef",
+    lyrics: [
+      { time: 0, text: "♪ [Grand Orchestral Brass & 808 Trap] ♪" },
+      { time: 10, text: "Winning speech ditti stage utte khad ke" },
+      { time: 20, text: "Jihna kita si doubt ohi vekhange padh ke" },
+      { time: 32, text: "History create kiti kalle kalle geet naal" },
+      { time: 48, text: "Aujla Szn forever!" }
+    ]
   }
 ];
 
@@ -702,7 +793,7 @@ export const SYSTEM_PLAYLISTS = [
     name: "💻 Focus / Coding",
     icon: "ri-code-s-slash-line",
     description: "High-productivity Phonk, Lo-Fi, and electronic flow",
-    trackIds: [1, 2, 5, 8, 6, 24, 34, 35, 37]
+    trackIds: [1, 2, 5, 8, 6, 24, 34, 35, 37, 39, 40, 42]
   },
   {
     id: "pl_chill",
@@ -716,7 +807,7 @@ export const SYSTEM_PLAYLISTS = [
     name: "🔥 Punjabi Hits",
     icon: "ri-fire-line",
     description: "Karan Aujla, Guru Randhawa, Shubh, Bohemia & Imran Khan",
-    trackIds: [4, 7, 11, 12, 13, 14, 15, 16, 19, 20, 23, 25, 26, 29, 30, 37]
+    trackIds: [4, 7, 11, 12, 13, 14, 15, 16, 19, 20, 23, 25, 26, 29, 30, 37, 39, 40, 41, 42, 43]
   },
   {
     id: "pl_phonk",
