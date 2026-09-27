@@ -1213,7 +1213,7 @@ class MusicPlayerApp {
       if (!raw) return;
       this.dom.termInput.value = '';
 
-      this.logTerminalLine(`root@auratune:~$ ${raw}`, 'term-prompt-prefix');
+      this.logTerminalLine(`root@kyoku:~$ ${raw}`, 'term-prompt-prefix');
       this.executeTerminalCommand(raw.toLowerCase());
     });
   }

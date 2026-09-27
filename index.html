@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AuraTune Pro — Next-Gen Audio Player & Office Suite</title>
-  <meta name="description" content="Ultimate web audio player with studio sound, real-time visualizers, full queue system, office minimalist mode, ASCII terminal, and keyboard-first controls.">
+  <title>Kyoku</title>
+  <meta name="description" content="Kyoku — Next-generation web audio music player with studio sound, real-time visualizers, full queue system, office minimalist mode, ASCII terminal, and keyboard-first controls.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" type="image/png" href="logo.png">
   <!-- Remix Icons -->
@@ -32,7 +32,7 @@
           <i class="ri-disc-line"></i>
         </div>
         <div class="brand-text">
-          <h1>AuraTune <span>PRO</span></h1>
+          <h1>Kyoku <span>PRO</span></h1>
           <span class="sub-label">Studio & Office Player</span>
         </div>
       </div>
@@ -354,7 +354,7 @@
       </div>
       <div class="term-title-text">
         <i class="ri-terminal-fill"></i>
-        <span id="termHeaderPrompt">root@auratune-dsp-daemon: ~/audio/engine (bash)</span>
+        <span id="termHeaderPrompt">root@kyoku-dsp-daemon: ~/audio/engine (bash)</span>
       </div>
       
       <div class="term-top-actions">
@@ -386,7 +386,7 @@
       <!-- ASCII Player Box (Signature Design from User Request) -->
       <div class="term-ascii-player-box">
         <div class="ascii-line">╭─────────────────────────────────────────────────────────────────────────────╮</div>
-        <div class="ascii-line">│                        🎵 AURATUNE CLI MUSIC PLAYER                         │</div>
+        <div class="ascii-line">│                         🎵 KYOKU CLI MUSIC PLAYER                           │</div>
         <div class="ascii-line">├─────────────────────────────────────────────────────────────────────────────┤</div>
         <div class="ascii-line">│                                                                             │</div>
         <div class="ascii-line">│  ♪  <b class="term-accent" id="asciiSongTitle">Metamorphosis</b>                                           │</div>
@@ -399,7 +399,7 @@
         <div class="ascii-line">│  🔊 <span id="asciiVolumeBar">████████████████████░░░░░</span> <span id="asciiVolumePercent">80%</span>                                   │</div>
         <div class="ascii-line">│                                                                             │</div>
         <div class="ascii-line">├─────────────────────────────────────────────────────────────────────────────┤</div>
-        <div class="ascii-line">│  QUEUE & PLAYBACK STATE: <span id="asciiQueueSummary">35 tracks in system</span>                                 │</div>
+        <div class="ascii-line">│  QUEUE & PLAYBACK STATE: <span id="asciiQueueSummary">43 tracks in system</span>                                 │</div>
         <div class="ascii-line">├─────────────────────────────────────────────────────────────────────────────┤</div>
         <div class="ascii-line">│ [Space] Play/Pause  [N] Next     [B] Prev     [M] Mute     [S] Shuffle      │</div>
         <div class="ascii-line">│ [R] Repeat Mode     [Q] Queue    [/] Search   [O] Office   [?] Help         │</div>
@@ -448,7 +448,7 @@
               <span class="term-box-title">📋 PROCESS QUEUE / LIBRARY TABLE</span>
               <div class="term-table-tools">
                 <input type="text" id="termProcessSearch" class="term-search-inline" placeholder="🔍 Search library...">
-                <span class="term-label" id="termQueueCount">35 tracks</span>
+                <span class="term-label" id="termQueueCount">43 tracks</span>
               </div>
             </div>
 
@@ -492,12 +492,12 @@
               <span class="term-label">Type <b>help</b> for command manual</span>
             </div>
             <div class="term-output" id="termOutput">
-              <div class="term-line"><span class="term-prompt-prefix">[SYSTEM]</span> AuraTune Pro Engine v5.0 initialized.</div>
-              <div class="term-line"><span class="term-prompt-prefix">[SYSTEM]</span> 35 high-fidelity tracks loaded to memory.</div>
+              <div class="term-line"><span class="term-prompt-prefix">[SYSTEM]</span> Kyoku Pro Engine v5.0 initialized.</div>
+              <div class="term-line"><span class="term-prompt-prefix">[SYSTEM]</span> 43 high-fidelity tracks loaded to memory.</div>
               <div class="term-line"><span class="term-prompt-prefix">[HINT]</span> Type <span class="term-highlight">help</span>, <span class="term-highlight">play</span>, <span class="term-highlight">next</span>, <span class="term-highlight">queue</span>, <span class="term-highlight">vol 80</span>, or <span class="term-highlight">studio</span>.</div>
             </div>
             <form id="termCommandForm" class="term-input-line">
-              <span class="term-prompt-str" id="termPromptStr">root@auratune:~$</span>
+              <span class="term-prompt-str" id="termPromptStr">root@kyoku:~$</span>
               <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false" placeholder="type a command (e.g. play, pause, next, queue, vol 80)...">
             </form>
           </div>
